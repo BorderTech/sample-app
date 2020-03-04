@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.github.bordertech.common</groupId>
+		<artifactId>qa-parent</artifactId>
+		<version>1.0.15</version>
+	</parent>
+
+	<packaging>pom</packaging>
+
+	<properties>
+		<bt.qa.skip>true</bt.qa.skip>
+		<!-- OWASP -->
+		<dependency-check.skip>true</dependency-check.skip>
+		<!-- Report Vulnerabilities. -->
+		<failBuildOnCVSS>11</failBuildOnCVSS>
+		<!-- Update every 168 hours (7 days) -->
+		<cveValidForHours>168</cveValidForHours>
+		<!-- Enforcer -->
+		<enforcer.skip>true</enforcer.skip>
+	</properties>
+
+	<name>sample-parent</name>
+
+	<groupId>com.github.bordertech.sample.app</groupId>
+	<artifactId>sample-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.github.bordertech.lde</groupId>
+					<artifactId>lde-exec-maven-plugin</artifactId>
+					<version>1.0.4</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Servlet API -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+			<!-- Didiums -->
+			<dependency>
+				<groupId>com.github.bordertech.didums</groupId>
+				<artifactId>didums-core</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+			<!-- Taskmaster -->
+			<dependency>
+				<groupId>com.github.bordertech.taskmaster</groupId>
+				<artifactId>taskmaster-service-helper</artifactId>
+				<version>2.0.0-beta-1</version>
+			</dependency>
+			<!-- Tomcat LDE -->
+			<dependency>
+				<groupId>com.github.bordertech.lde</groupId>
+				<artifactId>lde-tomcat</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+			<!-- WComponents -->
+			<dependency>
+				<groupId>com.github.bordertech.wcomponents</groupId>
+				<artifactId>wcomponents-bundle</artifactId>
+				<version>1.5.18</version>
+			</dependency>
+			<!-- WComponents Addons -->
+			<dependency>
+				<groupId>com.github.bordertech.wcomponents</groupId>
+				<artifactId>wcomponents-addons-bundle</artifactId>
+				<version>1.0.6-beta-1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<modules>
+
+		<module>model-api</module>
+		<module>model-bdd</module>
+		<module>model-mock-impl</module>
+		<module>rest-api</module>
+		<module>rest-server-impl</module>
+		<module>rest-client-model-impl</module>
+		<module>app-bom</module>
+		<module>app-lde</module>
+		<module>app-war</module>
+		<module>web-ui</module>
+		<module>web-lde</module>
+		<module>web-war</module>
+		<module>web-bom</module>
+	</modules>
+
+</project>

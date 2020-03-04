@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>web-ui</name>
+	<artifactId>web-ui</artifactId>
+
+	<parent>
+		<groupId>com.github.bordertech.sample.app</groupId>
+		<artifactId>sample-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<packaging>jar</packaging>
+
+	<properties>
+		<spotbugs.excludeFilterFile>${basedir}/spotbugs-exclude-filter.xml</spotbugs.excludeFilterFile>
+	</properties>
+
+	<dependencies>
+
+		<!-- Servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Model -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>model-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- WComponents -->
+		<dependency>
+			<groupId>com.github.bordertech.wcomponents</groupId>
+			<artifactId>wcomponents-bundle</artifactId>
+		</dependency>
+		<!-- WComponents Addons -->
+		<dependency>
+			<groupId>com.github.bordertech.wcomponents</groupId>
+			<artifactId>wcomponents-addons-bundle</artifactId>
+		</dependency>
+
+		<!-- Didiums -->
+		<dependency>
+			<groupId>com.github.bordertech.didums</groupId>
+			<artifactId>didums-core</artifactId>
+		</dependency>
+		<!-- Taskmaster -->
+		<dependency>
+			<groupId>com.github.bordertech.taskmaster</groupId>
+			<artifactId>taskmaster-service-helper</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
