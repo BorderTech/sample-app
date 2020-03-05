@@ -21,6 +21,9 @@ import javax.cache.expiry.Duration;
  */
 public class LookupTableImpl implements LookupTable {
 
+	private static final String WITH_NULL_OPTION = "WITH-NULL";
+	private static final String NO_NULL_OPTION = "NO-NULL";
+
 	/**
 	 * Cache name.
 	 */
@@ -61,7 +64,7 @@ public class LookupTableImpl implements LookupTable {
 		StringBuilder builder = new StringBuilder();
 		builder.append(details.getTable());
 		builder.append(CACHE_DELIM);
-		builder.append(details.withNull ? "WITH-NULL" : "NO-NULL");
+		builder.append(details.withNull ? WITH_NULL_OPTION : NO_NULL_OPTION);
 		// Add more cache busting here
 		return builder.toString();
 	}
@@ -70,7 +73,7 @@ public class LookupTableImpl implements LookupTable {
 	public Object getTableForCacheKey(final String key) {
 		String parts[] = key.split(CACHE_DELIM);
 		String table = parts[0];
-		boolean nullFlag = Objects.equals("WITH-NULL", parts[1]);
+		boolean nullFlag = Objects.equals(WITH_NULL_OPTION, parts[1]);
 		return new TableDetails(table, nullFlag);
 	}
 
@@ -144,7 +147,7 @@ public class LookupTableImpl implements LookupTable {
 		}
 
 		public String getKey() {
-			String flag = isWithNull() ? "WITH-NULL" : "NO-NULL";
+			String flag = isWithNull() ? WITH_NULL_OPTION : NO_NULL_OPTION;
 			return table + flag;
 		}
 

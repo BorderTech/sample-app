@@ -22,10 +22,10 @@
 		<enforcer.skip>false</enforcer.skip>
 	</properties>
 
-	<name>sample-parent</name>
+	<name>sample-app-parent</name>
 
 	<groupId>com.github.bordertech.sample.app</groupId>
-	<artifactId>sample-parent</artifactId>
+	<artifactId>sample-app-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<build>

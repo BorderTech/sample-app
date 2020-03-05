@@ -40,6 +40,6 @@ public abstract class ContentWrapper implements ContentAccess {
 	 *
 	 * @return the service result (preferably from a cache)
 	 */
-	protected abstract ResultHolder<?, DocumentContent> getDocument();
+	protected abstract ResultHolder<String, DocumentContent> getDocument();
 
 }
