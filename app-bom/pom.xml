@@ -19,10 +19,6 @@
 
 	<description>App Tier Bill Of Materials</description>
 
-	<properties>
-		<suppressionFiles>${basedir}/../jackson-owasp-suppression.xml</suppressionFiles>
-	</properties>
-
 	<dependencies>
 
 		<dependency>

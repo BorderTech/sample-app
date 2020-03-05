@@ -13,10 +13,6 @@
 	<artifactId>rest-server-impl</artifactId>
 	<name>rest-server-impl</name>
 
-	<properties>
-		<suppressionFiles>${basedir}/../jackson-owasp-suppression.xml</suppressionFiles>
-	</properties>
-
 	<dependencies>
 
 		<!-- API -->

@@ -19,10 +19,6 @@
 
 	<description>Deployable Server Tier WAR</description>
 
-	<properties>
-		<suppressionFiles>${basedir}/../jackson-owasp-suppression.xml</suppressionFiles>
-	</properties>
-
 	<build>
 		<plugins>
 			<plugin>

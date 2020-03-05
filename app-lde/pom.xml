@@ -19,10 +19,6 @@
 
 	<description>LDE for running locally</description>
 
-	<properties>
-		<suppressionFiles>${basedir}/../jackson-owasp-suppression.xml</suppressionFiles>
-	</properties>
-
 	<dependencies>
 
 		<!-- BOM -->

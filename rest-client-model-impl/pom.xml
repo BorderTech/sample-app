@@ -19,9 +19,6 @@
 
 	<properties>
 		<spotbugs.excludeFilterFile>${basedir}/spotbugs-exclude-files.xml</spotbugs.excludeFilterFile>
-		<!--
-		<suppressionFiles>${basedir}/../jackson-owasp-suppression.xml</suppressionFiles>
-		-->
 	</properties>
 
 	<dependencies>

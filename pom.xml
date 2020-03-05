@@ -13,7 +13,7 @@
 	<properties>
 		<bt.qa.skip>true</bt.qa.skip>
 		<!-- OWASP -->
-		<dependency-check.skip>true</dependency-check.skip>
+		<dependency-check.skip>false</dependency-check.skip>
 		<!-- Report Vulnerabilities. -->
 		<failBuildOnCVSS>11</failBuildOnCVSS>
 		<!-- Update every 168 hours (7 days) -->
