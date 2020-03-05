@@ -18,6 +18,7 @@
 	<description>REST API Client Implementation</description>
 
 	<properties>
+		<checkstyle.excludes>com/sample/app/rest/client/jersey/**/*</checkstyle.excludes>
 		<spotbugs.excludeFilterFile>${basedir}/spotbugs-exclude-files.xml</spotbugs.excludeFilterFile>
 	</properties>
 
@@ -83,6 +84,7 @@
 
 	<build>
 		<plugins>
+
 			<!-- Unpack the swagger JSON -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -206,7 +208,7 @@
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<exclude>**/com/restfriends/sample/rest/client/jersey/**</exclude>
+						<exclude>**/com/sample/app/rest/client/jersey/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

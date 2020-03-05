@@ -5,7 +5,7 @@ import com.github.bordertech.swagger.jackson.JacksonObjectMapperProvider;
 import com.sample.app.rest.server.v1.ClientServicesResourceImpl;
 
 /**
- * Client REST Swagger/Jersey Application.
+ * ClientREST Swagger/Jersey Application.
  */
 public class ClientRestApplication extends SwaggerRestApplication {
 

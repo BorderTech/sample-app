@@ -19,10 +19,16 @@ public class DefaultApiClient extends ApiClient {
 
 	private static final String AV_REST_URI = "sample.rest.uri";
 
+	/**
+	 * @return the REST URI endpoint
+	 */
 	public static String getRestUri() {
 		return Config.getInstance().getString(AV_REST_URI, "http://localhost:8082/lde/api");
 	}
 
+	/**
+	 * Default constructor.
+	 */
 	public DefaultApiClient() {
 		setBasePath(getRestUri());
 		ObjectMapper mapper = json.getContext(null);
@@ -33,7 +39,10 @@ public class DefaultApiClient extends ApiClient {
 	}
 
 	@Override
-	public <T> ApiResponse<T> invokeAPI(final String path, final String method, final List<Pair> queryParams, final Object body, final Map<String, String> headerParams, final Map<String, Object> formParams, final String accept, String contentType, final String[] authNames, final GenericType<T> returnType) throws ApiException {
+	public <T> ApiResponse<T> invokeAPI(final String path, final String method, final List<Pair> queryParams,
+			final Object body, final Map<String, String> headerParams, final Map<String, Object> formParams,
+			final String accept, final String contentType, final String[] authNames, final GenericType<T> returnType)
+			throws ApiException {
 		Object fixBody = body;
 		// Pass a Empty String instead of NULL Body
 		if ("PUT".equals(method) && body == null) {

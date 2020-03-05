@@ -11,7 +11,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<bt.qa.skip>true</bt.qa.skip>
+		<bt.qa.skip>false</bt.qa.skip>
 		<!-- OWASP -->
 		<dependency-check.skip>false</dependency-check.skip>
 		<!-- Report Vulnerabilities. -->

@@ -4,9 +4,6 @@ import com.github.bordertech.lde.api.LdeLauncher;
 
 /**
  * Start Tomcat Server.
- *
- * @author Jonathan Austin
- * @since 1.0.0
  */
 @SuppressWarnings("HideUtilityClassConstructor")
 public final class DemoLauncherProxy {

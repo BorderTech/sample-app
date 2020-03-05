@@ -6,7 +6,6 @@ import com.sample.app.model.client.CodeOption;
 import com.sample.app.model.client.DocumentContent;
 import com.sample.app.model.client.DocumentDetail;
 import com.sample.app.model.client.StateType;
-import com.sample.app.model.exception.ServiceException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Mock implementation for testing.
  */
-public class MockDataUtil {
+public final class MockDataUtil {
 
 	private static final AtomicInteger CLIENT_IDS = new AtomicInteger(1);
 	private static final Map<String, ClientDetail> CLIENTS = new HashMap<>();
@@ -37,16 +36,35 @@ public class MockDataUtil {
 
 	}
 
+	/**
+	 * Private constructor.
+	 */
+	private MockDataUtil() {
+		// Do nothing
+	}
+
+	/**
+	 * @return the list of available table names
+	 */
 	public static List<String> retrieveTableNames() {
 		return new ArrayList<>(TABLES.keySet());
 	}
 
+	/**
+	 * @param table the table name
+	 * @return the code options for the table
+	 */
 	public static List<CodeOption> retrieveTableCodes(final String table) {
 		List<CodeOption> options = TABLES.get(table);
 		return options;
 	}
 
-	public static List<ClientDetail> searchClients(final String search) throws ServiceException {
+	/**
+	 *
+	 * @param search the search criteria
+	 * @return the matching clients
+	 */
+	public static List<ClientDetail> searchClients(final String search) {
 
 		List<ClientDetail> clients = new ArrayList<>();
 
@@ -60,28 +78,50 @@ public class MockDataUtil {
 		return clients;
 	}
 
+	/**
+	 *
+	 * @param clientId the client id to retrieve
+	 * @return the client details
+	 */
 	public static ClientDetail retrieveClient(final String clientId) {
 		return CLIENTS.get(clientId);
 	}
 
-	public static ClientDetail createClient(final ClientDetail detail) throws ServiceException {
+	/**
+	 *
+	 * @param detail the client details to create
+	 * @return the created client
+	 */
+	public static ClientDetail createClient(final ClientDetail detail) {
 		String id = "ORG" + CLIENT_IDS.getAndIncrement();
 		detail.setClientId(id);
 		CLIENTS.put(id, detail);
 		return detail;
 	}
 
-	public static ClientDetail updateClient(final ClientDetail detail) throws ServiceException {
+	/**
+	 * @param detail the updated client details
+	 * @return the client details
+	 */
+	public static ClientDetail updateClient(final ClientDetail detail) {
 		String key = detail.getClientId();
 		CLIENTS.put(key, detail);
 		return detail;
 	}
 
-	public static void deleteClient(final String clientId) throws ServiceException {
+	/**
+	 *
+	 * @param clientId the client id to delete
+	 */
+	public static void deleteClient(final String clientId) {
 		CLIENTS.remove(clientId);
 		// TODO Remove documents as well
 	}
 
+	/**
+	 * @param clientId the client id to retrieve documents for
+	 * @return the list of client documents
+	 */
 	public static List<DocumentDetail> getOrCreateClientDocuments(final String clientId) {
 		// Build mock list of document details
 		List<DocumentDetail> docs = CLIENT_DOCUMENTS.get(clientId);
@@ -95,10 +135,19 @@ public class MockDataUtil {
 		return docs;
 	}
 
+	/**
+	 * @param documentId the document id to retrieve
+	 * @return the document details
+	 */
 	public static DocumentDetail retrieveDocument(final String documentId) {
 		return DOCUMENTS.get(documentId);
 	}
 
+	/**
+	 *
+	 * @param doc the document content to retrieve
+	 * @return the document content
+	 */
 	public static DocumentContent retrieveContent(final DocumentDetail doc) {
 		byte[] bytes = getDocumentBytes(doc);
 		String mime = getDocumentMimeType(doc);
@@ -126,10 +175,6 @@ public class MockDataUtil {
 		return tables;
 	}
 
-	/**
-	 * @param idx the suffix
-	 * @return the detail
-	 */
 	private static ClientDetail createOrganisation(final int idx) {
 		ClientDetail detail = new ClientDetail();
 		detail.setClientId("ORG" + idx);
@@ -140,10 +185,6 @@ public class MockDataUtil {
 		return detail;
 	}
 
-	/**
-	 * @param idx the suffix
-	 * @return the detail
-	 */
 	private static AddressDetail createAddress(final int idx) {
 		AddressDetail detail = new AddressDetail();
 		detail.setCountryCode("A");
@@ -154,9 +195,6 @@ public class MockDataUtil {
 		return detail;
 	}
 
-	/**
-	 * @return the mock documents
-	 */
 	private static List<DocumentDetail> createDocuments(final String clientId) {
 		// Build mock list of document details
 		List<DocumentDetail> docs = new ArrayList<>();

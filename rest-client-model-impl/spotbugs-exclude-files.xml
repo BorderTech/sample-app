@@ -3,7 +3,7 @@
 
 	<!-- Exclude generated files -->
 	<Match>
-		<Package name="~com\.restfriends\.sample\.rest\.client\.jersey\..*"/>
+		<Package name="~com\.sample\.app\.rest\.client\.jersey\..*"/>
 	</Match>
 
 </FindBugsFilter>
