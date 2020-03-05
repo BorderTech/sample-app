@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.github.bordertech.sample.app</groupId>
 		<artifactId>sample-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -44,25 +44,21 @@
 		<dependency>
 			<groupId>com.github.bordertech.config</groupId>
 			<artifactId>config</artifactId>
-			<version>1.0.5</version>
 		</dependency>
 
 		<!-- Jersey Client REST Implementation -->
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.29</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-multipart</artifactId>
-			<version>2.29</version>
 		</dependency>
 		<!-- Use JACKSON as JSON Provider -->
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
-			<version>2.29</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.fasterxml.jackson.core</groupId>
@@ -71,16 +67,19 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
-			<version>2.9.9</version>
 		</dependency>
 
 		<!-- Base64 encoding that works in both JVM and Android -->
 		<dependency>
 			<groupId>com.brsanthu</groupId>
 			<artifactId>migbase64</artifactId>
-			<version>2.2</version>
 		</dependency>
 
 	</dependencies>

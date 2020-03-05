@@ -19,14 +19,14 @@
 		<!-- Update every 168 hours (7 days) -->
 		<cveValidForHours>168</cveValidForHours>
 		<!-- Enforcer -->
-		<enforcer.skip>true</enforcer.skip>
+		<enforcer.skip>false</enforcer.skip>
 	</properties>
 
 	<name>sample-parent</name>
 
 	<groupId>com.github.bordertech.sample.app</groupId>
 	<artifactId>sample-parent</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 
 	<build>
 		<pluginManagement>
@@ -35,6 +35,14 @@
 					<groupId>com.github.bordertech.lde</groupId>
 					<artifactId>lde-exec-maven-plugin</artifactId>
 					<version>1.0.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.2.3</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -48,29 +56,61 @@
 				<artifactId>javax.servlet-api</artifactId>
 				<version>3.1.0</version>
 			</dependency>
+
 			<!-- Didiums -->
 			<dependency>
 				<groupId>com.github.bordertech.didums</groupId>
 				<artifactId>didums-core</artifactId>
 				<version>1.0.4</version>
 			</dependency>
+			<dependency>
+				<groupId>com.github.bordertech.didums</groupId>
+				<artifactId>didums-hk2</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+
 			<!-- Taskmaster -->
 			<dependency>
 				<groupId>com.github.bordertech.taskmaster</groupId>
 				<artifactId>taskmaster-service-helper</artifactId>
 				<version>2.0.0-beta-1</version>
 			</dependency>
+
 			<!-- Tomcat LDE -->
 			<dependency>
 				<groupId>com.github.bordertech.lde</groupId>
 				<artifactId>lde-tomcat</artifactId>
 				<version>1.0.4</version>
 			</dependency>
+
 			<!-- WComponents -->
 			<dependency>
 				<groupId>com.github.bordertech.wcomponents</groupId>
 				<artifactId>wcomponents-bundle</artifactId>
-				<version>1.5.18</version>
+				<version>1.4.26</version>
+				<!-- Convergence errors -->
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-configuration</groupId>
+						<artifactId>commons-configuration</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>commons-lang3</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.cache</groupId>
+						<artifactId>cache-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- WComponents Addons -->
 			<dependency>
@@ -78,6 +118,91 @@
 				<artifactId>wcomponents-addons-bundle</artifactId>
 				<version>1.0.6-beta-1</version>
 			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.6</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+
+			<!-- Restfriends -->
+			<!-- Data envelope -->
+			<dependency>
+				<groupId>com.github.bordertech.restfriends</groupId>
+				<artifactId>restfriends-envelope</artifactId>
+				<version>2.0.0-beta-1</version>
+			</dependency>
+			<!-- Swagger-Jersey -->
+			<dependency>
+				<groupId>com.github.bordertech.restfriends</groupId>
+				<artifactId>restfriends-swagger-jersey2</artifactId>
+				<version>2.0.0-beta-1</version>
+			</dependency>
+
+			<!-- REST Interface -->
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>jsr311-api</artifactId>
+				<version>1.1.1</version>
+			</dependency>
+
+			<!-- Swagger Annotations -->
+			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>1.6.0</version>
+			</dependency>
+
+			<!-- Config -->
+			<dependency>
+				<groupId>com.github.bordertech.config</groupId>
+				<artifactId>config</artifactId>
+				<version>1.0.5</version>
+			</dependency>
+
+			<!-- Jersey Client REST Implementation -->
+			<!-- Using verions 2.29 to match restfriends-jersey -->
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-client</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.media</groupId>
+				<artifactId>jersey-media-multipart</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.inject</groupId>
+				<artifactId>jersey-hk2</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<!-- Use JACKSON as JSON Provider -->
+			<dependency>
+				<groupId>org.glassfish.jersey.media</groupId>
+				<artifactId>jersey-media-json-jackson</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<!-- Using version 2.9.9 to match restfriends-jersey -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-joda</artifactId>
+				<version>2.9.9</version>
+			</dependency>
+
+			<!-- Base64 encoding that works in both JVM and Android -->
+			<dependency>
+				<groupId>com.brsanthu</groupId>
+				<artifactId>migbase64</artifactId>
+				<version>2.2</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

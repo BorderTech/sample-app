@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Service implementation that calls Swagger generated REST Client.
  */
-public class AdminServiceRestClientImpl extends AbstractRestClient implements ClientServices {
+public class ClientServicesRestClientImpl extends AbstractRestClient implements ClientServices {
 
 	@Override
 	public List<String> retrieveTables() throws ServiceException {

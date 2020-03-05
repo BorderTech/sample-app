@@ -197,12 +197,11 @@ public class SearchView extends WSection implements MessageContainer {
 		table.addColumn(new WTableColumn("ID", new WText()));
 		table.addColumn(new WTableColumn("Name", new WText()));
 		table.addColumn(new WTableColumn("Address", new WText()));
-		table.addColumn(new WTableColumn("Country", listCountry));
 		table.addColumn(new WTableColumn("Actions", actionsContainer));
 		table.setStripingType(WTable.StripingType.ROWS);
 		table.setNoDataMessage("No clients found.");
 
-		SimpleBeanBoundTableModel model = new SimpleBeanBoundTableModel(new String[]{"clientId", "name", "address", "identifications", "."});
+		SimpleBeanBoundTableModel model = new SimpleBeanBoundTableModel(new String[]{"clientId", "name", "address", "."});
 		table.setTableModel(model);
 
 		table.setBeanProperty(".");

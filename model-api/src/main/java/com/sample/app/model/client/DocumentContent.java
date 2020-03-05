@@ -14,6 +14,16 @@ public class DocumentContent implements Serializable {
 	private final String mimeType;
 
 	/**
+	 * Default constructor for Instantiation.
+	 */
+	protected DocumentContent() {
+		this.documentId = null;
+		this.bytes = null;
+		this.filename = null;
+		this.mimeType = null;
+	}
+
+	/**
 	 * @param documentId the document id
 	 * @param bytes the document content
 	 * @param filename the document file name

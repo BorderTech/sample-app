@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.github.bordertech.sample.app</groupId>
 		<artifactId>sample-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -45,15 +45,22 @@
 			<artifactId>wcomponents-addons-bundle</artifactId>
 		</dependency>
 
-		<!-- Didiums -->
-		<dependency>
-			<groupId>com.github.bordertech.didums</groupId>
-			<artifactId>didums-core</artifactId>
-		</dependency>
 		<!-- Taskmaster -->
 		<dependency>
 			<groupId>com.github.bordertech.taskmaster</groupId>
 			<artifactId>taskmaster-service-helper</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Fix convergence -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
 		</dependency>
 
 		<dependency>

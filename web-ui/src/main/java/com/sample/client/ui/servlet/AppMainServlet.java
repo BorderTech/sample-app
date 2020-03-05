@@ -4,12 +4,13 @@ import com.github.bordertech.wcomponents.WComponent;
 import com.github.bordertech.wcomponents.registry.UIRegistry;
 import com.github.bordertech.wcomponents.servlet.WServlet;
 import com.sample.client.ui.application.ClientApp;
+import javax.servlet.annotation.WebServlet;
 
 /**
- * @author Jonathan Austin
- * @since 1.0.0
+ * App main WEB UI servlet.
  */
-public class ClientServlet extends WServlet {
+@WebServlet(urlPatterns = "/app")
+public class AppMainServlet extends WServlet {
 
 	@Override
 	public WComponent getUI(final Object httpServletRequest) {

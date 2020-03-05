@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>com.github.bordertech.sample.app</groupId>
 		<artifactId>sample-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -23,12 +23,19 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- MOCK Implementation -->
+		<!-- REST Client Services -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>rest-client-model-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- MOCK Implementation (Usually only used in LDE or Unit Tests)-->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
 			<artifactId>model-mock-impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
 	</dependencies>
 
 </project>

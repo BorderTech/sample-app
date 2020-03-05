@@ -12,6 +12,14 @@ public class CodeOption implements Serializable {
 	private final String description;
 
 	/**
+	 * Default constructor for Instantiation.
+	 */
+	protected CodeOption() {
+		this.code = null;
+		this.description = null;
+	}
+
+	/**
 	 * @param code the option code
 	 * @param description the option description
 	 */
