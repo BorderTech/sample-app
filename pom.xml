@@ -28,6 +28,19 @@
 	<artifactId>sample-app-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<profiles>
+		<!-- Quick build profile with testing and QA turned off -->
+		<profile>
+			<id>quick-build</id>
+			<properties>
+				<skipTests>true</skipTests>
+				<bt.qa.skip>true</bt.qa.skip>
+				<dependency-check.skip>true</dependency-check.skip>
+				<enforcer.skip>true</enforcer.skip>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<pluginManagement>
 			<plugins>
