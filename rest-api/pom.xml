@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>rest-api</name>
+	<artifactId>rest-api</artifactId>
+
+	<parent>
+		<groupId>com.github.bordertech.sample.app</groupId>
+		<artifactId>sample-app-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<packaging>jar</packaging>
+
+	<dependencies>
+
+		<!-- Model -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>model-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Data envelope -->
+		<dependency>
+			<groupId>com.github.bordertech.restfriends</groupId>
+			<artifactId>restfriends-envelope</artifactId>
+		</dependency>
+
+		<!-- REST Interface -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>jsr311-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Swagger Annotations -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- Generate Swagger JSON -->
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>3.1.8</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<!-- There is a BUG https://github.com/kongchen/swagger-maven-plugin/issues/422 -->
+					<!-- Swagger FIX -->
+					<dependency>
+						<groupId>com.github.bordertech.restfriends</groupId>
+						<artifactId>restfriends-swagger-json-fix</artifactId>
+						<version>1.0.4</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<apiSources>
+						<apisource>
+							<locations>
+								<location>com.sample.app.rest.api.v1</location>
+							</locations>
+							<schemes>
+								<scheme>http</scheme>
+								<scheme>https</scheme>
+							</schemes>
+							<info>
+								<title>SWAGGER API</title>
+								<version>${project.version}</version>
+							</info>
+							<host>localhost:8080</host>
+							<basePath>/api</basePath>
+							<swaggerDirectory>${project.build.directory}/generated-sources/swagger-json</swaggerDirectory>
+							<outputFormats>json</outputFormats>
+						</apisource>
+					</apiSources>
+				</configuration>
+			</plugin>
+			<!-- Include swagger.json in target JAR -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/generated-sources/swagger-json</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

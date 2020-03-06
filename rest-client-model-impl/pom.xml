@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.github.bordertech.sample.app</groupId>
+		<artifactId>sample-app-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<packaging>jar</packaging>
+
+	<artifactId>rest-client-model-impl</artifactId>
+	<name>rest-client-model-impl</name>
+
+	<description>REST API Client Implementation</description>
+
+	<properties>
+		<checkstyle.excludes>com/sample/app/rest/client/jersey/**/*</checkstyle.excludes>
+		<spotbugs.excludeFilterFile>${basedir}/spotbugs-exclude-files.xml</spotbugs.excludeFilterFile>
+	</properties>
+
+	<dependencies>
+
+		<!-- API -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>rest-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Servlet Interface. -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Config -->
+		<dependency>
+			<groupId>com.github.bordertech.config</groupId>
+			<artifactId>config</artifactId>
+		</dependency>
+
+		<!-- Jersey Client REST Implementation -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+		</dependency>
+		<!-- Use JACKSON as JSON Provider -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+		</dependency>
+
+		<!-- Base64 encoding that works in both JVM and Android -->
+		<dependency>
+			<groupId>com.brsanthu</groupId>
+			<artifactId>migbase64</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<!-- Unpack the swagger JSON -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<id>unpack-swagger</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.github.bordertech.sample.app</groupId>
+									<artifactId>rest-api</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<outputDirectory>${project.build.directory}/swagger-json</outputDirectory>
+									<includes>swagger.json</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Generate Jersey CLIENT Code into TEMP Directory (creates a lot of junk)-->
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>3.3.4</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<importMappings>
+								<importMapping>ClientDetailResponse=com.sample.app.rest.api.v1.model.ClientDetailResponse</importMapping>
+								<importMapping>DocumentContentResponse=com.sample.app.rest.api.v1.model.DocumentContentResponse</importMapping>
+								<importMapping>RetrieveClientDocumentsResponse=com.sample.app.rest.api.v1.model.RetrieveClientDocumentsResponse</importMapping>
+								<importMapping>RetrieveCodesResponse=com.sample.app.rest.api.v1.model.RetrieveCodesResponse</importMapping>
+								<importMapping>RetrieveTablesResponse=com.sample.app.rest.api.v1.model.RetrieveTablesResponse</importMapping>
+								<importMapping>SearchClientsResponse=com.sample.app.rest.api.v1.model.SearchClientsResponse</importMapping>
+								<importMapping>ErrorDetail=com.github.bordertech.restfriends.envelope.ErrorDetail</importMapping>
+								<importMapping>ErrorResponse=com.github.bordertech.restfriends.envelope.ErrorResponse</importMapping>
+							</importMappings>
+							<inputSpec>${project.build.directory}/swagger-json/swagger.json</inputSpec>
+							<language>java</language>
+							<library>jersey2</library>
+							<apiPackage>com.sample.app.rest.client.jersey.v1.api</apiPackage>
+							<invokerPackage>com.sample.app.rest.client.jersey.v1.invoker</invokerPackage>
+							<output>${project.build.directory}/swagger-tmp</output>
+							<!-- pass any necessary config options -->
+							<configOptions>
+								<dateLibrary>joda</dateLibrary>
+							</configOptions>
+							<modelPackage>com.sample.app.model.client</modelPackage>
+							<generateApis>true</generateApis>
+							<generateApiTests>true</generateApiTests>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<generateModelTests>false</generateModelTests>
+							<generateModels>false</generateModels>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateSupportingFiles>true</generateSupportingFiles>
+							<addCompileSourceRoot>false</addCompileSourceRoot>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Copy the files we want. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- Copy the generated code we want to use -->
+								<copy todir="${project.build.directory}/generated-sources/swagger">
+									<fileset dir="${project.build.directory}/swagger-tmp/src/main/java" includes="**/*" />
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Add generated source to the project -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/swagger</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- PMD - Exclude Generated -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/com/sample/app/rest/client/jersey/**</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

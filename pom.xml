@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.github.bordertech.common</groupId>
+		<artifactId>qa-parent</artifactId>
+		<version>1.0.15</version>
+	</parent>
+
+	<packaging>pom</packaging>
+
+	<properties>
+		<bt.qa.skip>false</bt.qa.skip>
+		<!-- OWASP -->
+		<dependency-check.skip>false</dependency-check.skip>
+		<!-- Report Vulnerabilities. -->
+		<failBuildOnCVSS>11</failBuildOnCVSS>
+		<!-- Update every 168 hours (7 days) -->
+		<cveValidForHours>168</cveValidForHours>
+		<!-- Enforcer -->
+		<enforcer.skip>false</enforcer.skip>
+	</properties>
+
+	<name>sample-app-parent</name>
+
+	<groupId>com.github.bordertech.sample.app</groupId>
+	<artifactId>sample-app-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<profiles>
+		<!-- Quick build profile with testing and QA turned off -->
+		<profile>
+			<id>quick-build</id>
+			<properties>
+				<skipTests>true</skipTests>
+				<bt.qa.skip>true</bt.qa.skip>
+				<dependency-check.skip>true</dependency-check.skip>
+				<enforcer.skip>true</enforcer.skip>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.github.bordertech.lde</groupId>
+					<artifactId>lde-exec-maven-plugin</artifactId>
+					<version>1.0.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.2.3</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Servlet API -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+
+			<!-- Didiums -->
+			<dependency>
+				<groupId>com.github.bordertech.didums</groupId>
+				<artifactId>didums-core</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.bordertech.didums</groupId>
+				<artifactId>didums-hk2</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+
+			<!-- Taskmaster -->
+			<dependency>
+				<groupId>com.github.bordertech.taskmaster</groupId>
+				<artifactId>taskmaster-service-helper</artifactId>
+				<version>2.0.0-beta-1</version>
+			</dependency>
+
+			<!-- Tomcat LDE -->
+			<dependency>
+				<groupId>com.github.bordertech.lde</groupId>
+				<artifactId>lde-tomcat</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+
+			<!-- WComponents -->
+			<dependency>
+				<groupId>com.github.bordertech.wcomponents</groupId>
+				<artifactId>wcomponents-bundle</artifactId>
+				<version>1.4.26</version>
+				<!-- Convergence errors -->
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-configuration</groupId>
+						<artifactId>commons-configuration</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>commons-lang3</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.cache</groupId>
+						<artifactId>cache-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- WComponents Addons -->
+			<dependency>
+				<groupId>com.github.bordertech.wcomponents</groupId>
+				<artifactId>wcomponents-addons-bundle</artifactId>
+				<version>1.0.6-beta-1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.6</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+
+			<!-- Restfriends -->
+			<!-- Data envelope -->
+			<dependency>
+				<groupId>com.github.bordertech.restfriends</groupId>
+				<artifactId>restfriends-envelope</artifactId>
+				<version>2.0.0-beta-1</version>
+			</dependency>
+			<!-- Swagger-Jersey -->
+			<dependency>
+				<groupId>com.github.bordertech.restfriends</groupId>
+				<artifactId>restfriends-swagger-jersey2</artifactId>
+				<version>2.0.0-beta-1</version>
+			</dependency>
+
+			<!-- REST Interface -->
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>jsr311-api</artifactId>
+				<version>1.1.1</version>
+			</dependency>
+
+			<!-- Swagger Annotations -->
+			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>1.6.0</version>
+			</dependency>
+
+			<!-- Config -->
+			<dependency>
+				<groupId>com.github.bordertech.config</groupId>
+				<artifactId>config</artifactId>
+				<version>1.0.5</version>
+			</dependency>
+
+			<!-- Jersey Client REST Implementation -->
+			<!-- Using verions 2.29 to match restfriends-jersey -->
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-client</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.media</groupId>
+				<artifactId>jersey-media-multipart</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.inject</groupId>
+				<artifactId>jersey-hk2</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<!-- Use JACKSON as JSON Provider -->
+			<dependency>
+				<groupId>org.glassfish.jersey.media</groupId>
+				<artifactId>jersey-media-json-jackson</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<!-- Using version 2.9.9 to match restfriends-jersey -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-joda</artifactId>
+				<version>2.9.9</version>
+			</dependency>
+
+			<!-- Base64 encoding that works in both JVM and Android -->
+			<dependency>
+				<groupId>com.brsanthu</groupId>
+				<artifactId>migbase64</artifactId>
+				<version>2.2</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<modules>
+
+		<module>model-api</module>
+		<module>model-bdd</module>
+		<module>model-mock-impl</module>
+		<module>rest-api</module>
+		<module>rest-server-impl</module>
+		<module>rest-client-model-impl</module>
+		<module>app-bom</module>
+		<module>app-lde</module>
+		<module>app-war</module>
+		<module>web-ui</module>
+		<module>web-lde</module>
+		<module>web-war</module>
+		<module>web-bom</module>
+	</modules>
+
+</project>

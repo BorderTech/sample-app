@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.github.bordertech.sample.app</groupId>
+		<artifactId>sample-app-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<packaging>jar</packaging>
+
+	<artifactId>app-lde</artifactId>
+	<name>app-lde</name>
+
+	<description>LDE for running locally</description>
+
+	<dependencies>
+
+		<!-- BOM -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>app-bom</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- MOCK Services -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>model-mock-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Tomcat LDE -->
+		<dependency>
+			<groupId>com.github.bordertech.lde</groupId>
+			<artifactId>lde-tomcat</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- LDE Runner - Use "mvn lde-exec:run" to start LDE -->
+			<plugin>
+				<groupId>com.github.bordertech.lde</groupId>
+				<artifactId>lde-exec-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
