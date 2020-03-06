@@ -22,18 +22,14 @@ import org.apache.commons.io.IOUtils;
  */
 public final class MockDataUtil {
 
-	private static final AtomicInteger CLIENT_IDS = new AtomicInteger(1);
+	private static final AtomicInteger CLIENT_IDS = new AtomicInteger();
 	private static final Map<String, ClientDetail> CLIENTS = new HashMap<>();
 	private static final Map<String, List<DocumentDetail>> CLIENT_DOCUMENTS = new HashMap<>();
 	private static final Map<String, DocumentDetail> DOCUMENTS = new HashMap<>();
-	private static final Map<String, List<CodeOption>> TABLES = createTables();
+	private static final Map<String, List<CodeOption>> TABLES = new HashMap<>();
 
 	static {
-		for (int i = 1; i < 10; i++) {
-			ClientDetail client = createOrganisation(CLIENT_IDS.getAndIncrement());
-			CLIENTS.put(client.getClientId(), client);
-		}
-
+		resetData();
 	}
 
 	/**
@@ -41,6 +37,14 @@ public final class MockDataUtil {
 	 */
 	private MockDataUtil() {
 		// Do nothing
+	}
+
+	/**
+	 * Reset the mock data.
+	 */
+	public static void resetData() {
+		setupClients();
+		setupTables();
 	}
 
 	/**
@@ -154,25 +158,36 @@ public final class MockDataUtil {
 		return new DocumentContent(doc.getDocumentId(), bytes, doc.getResourcePath(), mime);
 	}
 
-	private static Map<String, List<CodeOption>> createTables() {
+	private static void setupClients() {
 
-		Map<String, List<CodeOption>> tables = new HashMap<>();
+		CLIENT_IDS.set(1);
+		CLIENTS.clear();
+		CLIENT_DOCUMENTS.clear();
+		DOCUMENTS.clear();
+
+		for (int i = 1; i < 10; i++) {
+			ClientDetail client = createOrganisation(CLIENT_IDS.getAndIncrement());
+			CLIENTS.put(client.getClientId(), client);
+		}
+	}
+
+	private static void setupTables() {
+
+		TABLES.clear();
 
 		// Country
 		List<CodeOption> options = new ArrayList<>();
 		options.add(new CodeOption("A", "Australia"));
 		options.add(new CodeOption("NZ", "New Zealand"));
 		options.add(new CodeOption("UK", "United Kingdom"));
-		tables.put("country", options);
+		TABLES.put("country", options);
 
 		// Currency
 		options = new ArrayList<>();
 		options.add(new CodeOption("AUD", "Australia Dollar"));
 		options.add(new CodeOption("GBP", "British Pound"));
 		options.add(new CodeOption("USD", "US Dollar"));
-		tables.put("currency", options);
-
-		return tables;
+		TABLES.put("currency", options);
 	}
 
 	private static ClientDetail createOrganisation(final int idx) {

@@ -27,6 +27,11 @@ public class ClientServicesMockImpl implements ClientServices {
 
 	@Override
 	public List<CodeOption> retrieveCodes(final String table) throws ServiceException {
+		// Mock error
+		if (ERROR_REQ.equals(table)) {
+			throw new ServiceException("Mock table error");
+		}
+
 		List<CodeOption> options = MockDataUtil.retrieveTableCodes(table);
 		if (options == null) {
 			throw new ServiceException("Table not found [" + table + "]");
@@ -37,10 +42,12 @@ public class ClientServicesMockImpl implements ClientServices {
 	@Override
 	public List<ClientDetail> searchClients(final String search) throws ServiceException {
 
+		// Mock error
 		if (ERROR_REQ.equals(search)) {
 			throw new ServiceException("Mock search error");
 		}
 
+		// None found
 		if (NONE_REQ.equals(search)) {
 			return Collections.EMPTY_LIST;
 		}
@@ -50,6 +57,10 @@ public class ClientServicesMockImpl implements ClientServices {
 
 	@Override
 	public ClientDetail retrieveClient(final String clientId) throws ServiceException, ClientNotFoundException {
+		// Mock error
+		if (ERROR_REQ.equals(clientId)) {
+			throw new ServiceException("Mock retrieve client error");
+		}
 		ClientDetail detail = MockDataUtil.retrieveClient(clientId);
 		if (detail == null) {
 			throw new ClientNotFoundException();
@@ -59,6 +70,7 @@ public class ClientServicesMockImpl implements ClientServices {
 
 	@Override
 	public ClientDetail createClient(final ClientDetail detail) throws ServiceException {
+		// Mock error
 		if (ERROR_REQ.equals(detail.getName())) {
 			throw new ServiceException("Mock create client error");
 		}
@@ -67,13 +79,14 @@ public class ClientServicesMockImpl implements ClientServices {
 
 	@Override
 	public ClientDetail updateClient(final ClientDetail detail) throws ServiceException {
+		// Mock error
 		if (ERROR_REQ.equals(detail.getName())) {
 			throw new ServiceException("Mock update client error");
 		}
 
 		String key = detail.getClientId();
 		if (MockDataUtil.retrieveClient(key) == null) {
-			throw new ServiceException("Organisation does not exist [" + key + "].");
+			throw new ServiceException("Client does not exist [" + key + "].");
 		}
 		// Update
 		MockDataUtil.updateClient(detail);
@@ -82,9 +95,14 @@ public class ClientServicesMockImpl implements ClientServices {
 
 	@Override
 	public void deleteClient(final String clientId) throws ServiceException {
+		// Mock error
+		if (ERROR_REQ.equals(clientId)) {
+			throw new ServiceException("Mock delete client error");
+		}
+
 		// Check exists
 		if (MockDataUtil.retrieveClient(clientId) == null) {
-			throw new ServiceException("Organisation does not exist [" + clientId + "].");
+			throw new ServiceException("Client does not exist [" + clientId + "].");
 		}
 		// Remove
 		MockDataUtil.deleteClient(clientId);
@@ -92,12 +110,19 @@ public class ClientServicesMockImpl implements ClientServices {
 
 	@Override
 	public List<DocumentDetail> retrieveClientDocuments(final String clientId) throws ServiceException, ClientNotFoundException {
+		// Mock error
+		if (ERROR_REQ.equals(clientId)) {
+			throw new ServiceException("Mock retrieve client documents");
+		}
 		return MockDataUtil.getOrCreateClientDocuments(clientId);
 	}
 
 	@Override
 	public DocumentContent retrieveDocument(final String documentId) throws ServiceException, DocumentNotFoundException {
-
+		// Mock error
+		if (ERROR_REQ.equals(documentId)) {
+			throw new ServiceException("Mock retrieve document content");
+		}
 		DocumentDetail doc = MockDataUtil.retrieveDocument(documentId);
 		if (doc == null) {
 			throw new DocumentNotFoundException();
