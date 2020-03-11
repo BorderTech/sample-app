@@ -9,9 +9,9 @@ Scenario: Retrieve a valid client
   Then User gets "ORG1" client
 
 Scenario: Retrieve an invalid client
-  When User retrieves client "notfound"
-  Then User gets client exception for "notfound"
+  When User retrieves a client that does not exist
+  Then User gets client not found exception for retrieve
 
 Scenario: Retrieve a client has a system error
-  When User retrieves client "error"
-  Then User gets service exception for "error"
+  When User retrieves client that causes a service exception
+  Then User gets service exception for retrieve

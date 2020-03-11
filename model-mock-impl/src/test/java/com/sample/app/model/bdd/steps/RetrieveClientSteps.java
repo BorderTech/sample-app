@@ -5,15 +5,15 @@ import com.sample.app.model.exception.ClientNotFoundException;
 import com.sample.app.model.exception.ServiceException;
 import com.sample.app.model.impl.ClientServicesMockImpl;
 import com.sample.app.model.services.ClientServices;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 /**
  * Retrieve client steps.
  */
-public class RetrieveApplicationSteps {
+public class RetrieveClientSteps {
 
 	private final ClientServices backing = new ClientServicesMockImpl();
 
@@ -21,13 +21,13 @@ public class RetrieveApplicationSteps {
 	private Exception error;
 
 	@Given("A client retrieve service is available")
-	public void wantToRetrieveApplication() {
+	public void wantToRetrieveClient() {
 		this.error = null;
 		this.client = null;
 	}
 
 	@When("User retrieves client {string}")
-	public void retrieveApplication(final String id) {
+	public void retrieveClient(final String id) {
 		client = null;
 		error = null;
 		try {
@@ -37,20 +37,30 @@ public class RetrieveApplicationSteps {
 		}
 	}
 
+	@When("User retrieves a client that does not exist")
+	public void retrieveClientNotExists() {
+		retrieveClient("notfound");
+	}
+
+	@When("User retrieves client that causes a service exception")
+	public void retrieveClientCausesError() {
+		retrieveClient("error");
+	}
+
 	@Then("User gets {string} client")
 	public void shouldHaveApplication(final String id) {
 		Assert.assertNotNull("Client should have been retrieved", client);
 		Assert.assertEquals("Incorrect client id retrieved", id, client.getClientId());
 	}
 
-	@Then("User gets client exception for {string}")
-	public void shouldHaveApplicationException(final String id) {
-		Assert.assertTrue("Service should have created not found exception", error instanceof ClientNotFoundException);
+	@Then("User gets client not found exception for retrieve")
+	public void shouldHaveClientNotFoundException() {
+		Assert.assertTrue("Service should have caused client not found exception", error instanceof ClientNotFoundException);
 	}
 
-	@Then("User gets service exception for {string}")
-	public void shouldHaveServiceException(final String id) {
-		Assert.assertTrue("Service should have created service exception", error instanceof ServiceException);
+	@Then("User gets service exception for retrieve")
+	public void shouldHaveServiceException() {
+		Assert.assertTrue("Service should have caused service exception", error instanceof ServiceException);
 	}
 
 }

@@ -223,6 +223,14 @@
 				<version>0.8.13</version>
 			</dependency>
 
+			<!-- Serenity & Cucumber only work with junit 4 (and not vintage junit 5) -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
