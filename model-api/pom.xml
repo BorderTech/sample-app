@@ -15,22 +15,19 @@
 
 	<packaging>jar</packaging>
 
-	<properties>
-		<spotbugs.excludeFilterFile>${basedir}/spotbugs-exclude-filter.xml</spotbugs.excludeFilterFile>
-	</properties>
-
 	<dependencies>
+		<!-- Junit -->
 		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<!-- POJO Tester -->
+		<dependency>
+			<groupId>com.openpojo</groupId>
+			<artifactId>openpojo</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 </project>

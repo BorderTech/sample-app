@@ -13,7 +13,7 @@
 	<properties>
 		<bt.qa.skip>false</bt.qa.skip>
 		<!-- OWASP -->
-		<dependency-check.skip>false</dependency-check.skip>
+		<dependency-check.skip>true</dependency-check.skip>
 		<!-- Report Vulnerabilities. -->
 		<failBuildOnCVSS>11</failBuildOnCVSS>
 		<!-- Update every 168 hours (7 days) -->
@@ -214,6 +214,21 @@
 				<groupId>com.brsanthu</groupId>
 				<artifactId>migbase64</artifactId>
 				<version>2.2</version>
+			</dependency>
+
+			<!-- POJO Tester -->
+			<dependency>
+				<groupId>com.openpojo</groupId>
+				<artifactId>openpojo</artifactId>
+				<version>0.8.13</version>
+			</dependency>
+
+			<!-- Serenity & Cucumber only work with junit 4 (and not vintage junit 5) -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
 			</dependency>
 
 		</dependencies>
