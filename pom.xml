@@ -39,6 +39,29 @@
 				<enforcer.skip>true</enforcer.skip>
 			</properties>
 		</profile>
+		<profile>
+			<id>smoke</id>
+			<properties>
+				<bt.qa.skip>true</bt.qa.skip>
+				<dependency-check.skip>true</dependency-check.skip>
+				<enforcer.skip>true</enforcer.skip>
+			</properties>
+			<build>
+				<plugins>
+					<!-- Run Smoke Test Category -->
+					<!-- mvn test -Psmoke -->
+					<!-- Default properties -Dserver.smoke.port=8082 -Dserver.smoke.host=http://localhost -Dserver.smoke.base=/lde/api/v1/ -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.18</version>
+						<configuration>
+							<groups>com.sample.app.test.Smoke</groups>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<build>
@@ -59,6 +82,19 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
+		<plugins>
+			<!-- Run Unit Test Category -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<!-- After 2.18 Cucumber runner does not work with Categories -->
+				<version>2.18</version>
+				<configuration>
+					<groups>com.sample.app.test.Unit</groups>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 	<dependencyManagement>

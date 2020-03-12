@@ -13,6 +13,12 @@
 	<artifactId>rest-server-impl</artifactId>
 	<name>rest-server-impl</name>
 
+	<properties>
+		<enforcer.fail>false</enforcer.fail>
+		<!-- Needed for tomcat jar lookups -->
+		<surefire.useSystemClassLoader>false</surefire.useSystemClassLoader>
+	</properties>
+
 	<dependencies>
 
 		<!-- API -->
@@ -39,6 +45,42 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- JUNIT -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Rest Assured (Uses GSON for JSON) -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>4.2.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- MOCK Services -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>model-mock-impl</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>model-bdd</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Tomcat LDE -->
+		<dependency>
+			<groupId>com.github.bordertech.lde</groupId>
+			<artifactId>lde-tomcat</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
