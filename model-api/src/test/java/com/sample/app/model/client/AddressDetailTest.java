@@ -1,12 +1,15 @@
 package com.sample.app.model.client;
 
+import com.sample.app.test.Unit;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
  * Example test.
  */
-public class AddressDetail_Test {
+@Category(Unit.class)
+public class AddressDetailTest {
 
 	@Test
 	public void testCountryCodeAccessors() {

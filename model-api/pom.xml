@@ -28,6 +28,14 @@
 			<artifactId>openpojo</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Model BDD -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>model-bdd</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 </project>

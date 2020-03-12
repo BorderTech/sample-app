@@ -8,11 +8,14 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SerializableTester;
 import com.openpojo.validation.test.impl.SetterTester;
+import com.sample.app.test.Unit;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
  * Unit tests for model POJOs.
  */
+@Category(Unit.class)
 public class ModelPojoTest {
 
 	// The package to test
