@@ -21,10 +21,16 @@
 
 	<dependencies>
 
+		<!-- REST Jersey Server impl -->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
 			<artifactId>rest-server-impl</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<!-- Didums -->
+		<dependency>
+			<groupId>com.github.bordertech.didums</groupId>
+			<artifactId>didums-core</artifactId>
 		</dependency>
 
 		<!-- MOCK Implementation -->
