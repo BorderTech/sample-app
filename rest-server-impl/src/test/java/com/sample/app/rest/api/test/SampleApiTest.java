@@ -1,4 +1,4 @@
-package com.restfriends.sample.restassured.test;
+package com.sample.app.rest.api.test;
 
 import com.github.bordertech.lde.api.LdeLauncher;
 import com.sample.app.model.impl.MockDataUtil;

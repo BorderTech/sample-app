@@ -48,3 +48,18 @@ Follow these steps to make the Web UI call the local instance of the REST Servic
 3. Uncomment the property bordertech.config.environment=LOCAL
 4. Run Web UI
 5. Run REST Service
+
+
+### Smoke tests
+
+Sample command lines for running smoke tests.
+
+#### API Test
+```
+mvn test -Psmoke -pl rest-server-impl -Dserver.smoke.port=8086 -Dserver.smoke.host=http://localhost -Dserver.smoke.base=/lde/api/v1/
+```
+
+#### UI Test
+```
+mvn test -Psmoke -pl web-ui -Dbordertech.webfriends.selenium.launchServer=false -Dbordertech.webfriends.selenium.serverUrl=http://localhost:8081/lde
+```
