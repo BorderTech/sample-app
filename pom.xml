@@ -50,7 +50,6 @@
 				<plugins>
 					<!-- Run Smoke Test Category -->
 					<!-- mvn test -Psmoke -->
-					<!-- Default properties -Dserver.smoke.port=8082 -Dserver.smoke.host=http://localhost -Dserver.smoke.base=/lde/api/v1/ -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>

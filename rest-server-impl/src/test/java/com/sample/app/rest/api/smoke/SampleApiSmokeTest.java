@@ -1,4 +1,4 @@
-package com.restfriends.sample.restassured.smoke;
+package com.sample.app.rest.api.smoke;
 
 import com.sample.app.test.Smoke;
 import io.restassured.RestAssured;
