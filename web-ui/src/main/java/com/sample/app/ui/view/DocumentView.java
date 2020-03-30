@@ -120,14 +120,24 @@ public class DocumentView extends WSection implements MessageContainer {
 		private final String desc;
 		private final char accessKey;
 
+		/**
+		 * @return the URL
+		 */
 		public String getUrl() {
 			return url;
 		}
 
+		/**
+		 * @return the description
+		 */
 		public String getDesc() {
 			return desc;
 		}
 
+		/**
+		 *
+		 * @return the access key;
+		 */
 		public char getAcccessKey() {
 			return accessKey;
 		}

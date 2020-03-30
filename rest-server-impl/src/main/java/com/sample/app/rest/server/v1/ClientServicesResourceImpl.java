@@ -30,6 +30,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 
 	private final ClientServices backing = Didums.getService(ClientServices.class);
 
+	@Override
 	public RetrieveTablesResponse retrieveTables()
 			throws RestBusinessException {
 		try {
@@ -40,6 +41,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public RetrieveCodesResponse retrieveCodes(final String table)
 			throws RestBusinessException {
 		try {
@@ -50,6 +52,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public SearchClientsResponse searchClients(final String search)
 			throws RestBusinessException {
 		try {
@@ -60,6 +63,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public ClientDetailResponse retrieveClient(final String clientId)
 			throws RestBusinessException {
 		try {
@@ -70,6 +74,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public ClientDetailResponse createClient(final ClientDetail detail)
 			throws RestBusinessException {
 		try {
@@ -80,6 +85,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public ClientDetailResponse updateClient(final String clientId, final ClientDetail detail)
 			throws RestBusinessException {
 		// Check IDs
@@ -94,6 +100,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public Response deleteClient(final String clientId)
 			throws RestBusinessException {
 		try {
@@ -104,6 +111,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public RetrieveClientDocumentsResponse retrieveClientDocuments(final String clientId)
 			throws RestBusinessException {
 		try {
@@ -114,6 +122,7 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 		}
 	}
 
+	@Override
 	public DocumentContentResponse retrieveDocument(final String documentId)
 			throws RestBusinessException {
 		try {

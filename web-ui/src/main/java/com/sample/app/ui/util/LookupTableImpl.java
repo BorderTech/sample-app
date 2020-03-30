@@ -23,14 +23,8 @@ public class LookupTableImpl implements LookupTable {
 
 	private static final String WITH_NULL_OPTION = "WITH-NULL";
 	private static final String NO_NULL_OPTION = "NO-NULL";
-
-	/**
-	 * Cache name.
-	 */
 	private static final String CACHE_NAME = "client-lookuptable";
-
 	private static final ClientServices CLIENT_SERVICES = ClientServicesHelperFactory.getInstance();
-
 	private static final String CACHE_DELIM = "#";
 
 	@Override
@@ -119,6 +113,9 @@ public class LookupTableImpl implements LookupTable {
 		return cache;
 	}
 
+	/**
+	 * Table option details.
+	 */
 	public static class TableDetails implements Serializable {
 
 		private final boolean withNull;
@@ -129,32 +126,55 @@ public class LookupTableImpl implements LookupTable {
 
 		private static final String NULL_DESCRIPTION = "";
 
+		/**
+		 * @param table the table name
+		 */
 		public TableDetails(final String table) {
 			this(table, false);
 		}
 
+		/**
+		 *
+		 * @param table the table name
+		 * @param withNull true if include null option
+		 */
 		public TableDetails(final String table, final boolean withNull) {
 			this.table = table;
 			this.withNull = withNull;
 		}
 
+		/**
+		 * @return true if include null
+		 */
 		public boolean isWithNull() {
 			return withNull;
 		}
 
+		/**
+		 * @return the table name
+		 */
 		public String getTable() {
 			return table;
 		}
 
+		/**
+		 * @return the table key
+		 */
 		public String getKey() {
 			String flag = isWithNull() ? WITH_NULL_OPTION : NO_NULL_OPTION;
 			return table + flag;
 		}
 
+		/**
+		 * @return the null code option
+		 */
 		public String getNullCode() {
 			return isWithNull() ? NULL_CODE : null;
 		}
 
+		/**
+		 * @return the null code description
+		 */
 		public String getNullDescription() {
 			return isWithNull() ? NULL_DESCRIPTION : null;
 		}

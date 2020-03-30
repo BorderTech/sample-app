@@ -11,6 +11,9 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class AppServletListener extends AbstractComboServletListener {
 
+	/**
+	 * Default constructor.
+	 */
 	public AppServletListener() {
 		super(new TaskContextListener(), new CachingProviderListener());
 	}

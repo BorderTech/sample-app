@@ -24,10 +24,16 @@ public class PollingViewer extends PollingServicePanel<DocumentDetail, DocumentC
 
 	private final WContent content = new WContent();
 
+	/**
+	 * Default constructor.
+	 */
 	public PollingViewer() {
 		this(null);
 	}
 
+	/**
+	 * @param document the document details to view
+	 */
 	public PollingViewer(final DocumentDetail document) {
 		setServiceCriteria(document);
 		getContentResultHolder().add(content);
