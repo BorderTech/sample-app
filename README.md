@@ -39,16 +39,58 @@ Follow these commands to run a local instance of the Web UI:
 
 #### Change Web UI to Use Local REST Services
 
-By default the Web UI uses a Mocked version of the service layer.
+By default the Web UI uses a Mocked version of the service layer. This can be overriden to use a REST Client implementation via a property file, environment variables or system properties.
 
-Follow these steps to make the Web UI call the local instance of the REST Services:
+##### Property file
+
+Follow these steps to make the Web UI call the local instance of the REST Services via a property file:
 
 1. cd web-lde
 2. copy example_local_app.properties to local_app.properties
-3. Uncomment the property bordertech.config.environment=LOCAL
+3. Uncomment the BT_WEB_ENV=LOCAL
 4. Run Web UI
 5. Run REST Service
 
+##### Environment Variables
+
+Environment Variables can also be used to make the Web UI use a REST client implementation.
+
+To use the REST Client Implementation, set the following variable:
+
+``` java
+SET BT_WEB_ENV=LOCAL
+```
+
+To use a different REST endpoint, set the following variable:
+
+``` java
+SET BT_APP_REST_URI=http://myhost:8082/myapp/api
+```
+
+##### System properties
+
+The configuration of the Web UI and REST Services can also be configured via System Properties.
+
+Running the Web UI with the REST Client Implementation:
+
+``` java
+cd web-lde
+mvn lde-exec:run -DBT_WEB_ENV=LOCAL
+```
+
+Running the Web UI with the REST Client Implementation and different REST URI:
+
+``` java
+cd web-lde
+mvn lde-exec:run -DBT_WEB_ENV=LOCAL -DBT_APP_REST_URI=http://localhost:8888/lde/api
+```
+
+Running the REST Services on a different Port:
+
+``` java
+cd app-lde
+mvn lde-exec:run -Dbordertech.lde.port.default=8888
+```
 
 ### Smoke tests
 

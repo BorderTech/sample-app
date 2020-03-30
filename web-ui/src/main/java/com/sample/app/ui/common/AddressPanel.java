@@ -16,6 +16,9 @@ import java.util.List;
  */
 public class AddressPanel extends WPanel {
 
+	/**
+	 * Construct panel.
+	 */
 	public AddressPanel() {
 
 		WFieldLayout layout = new WFieldLayout(WFieldLayout.LAYOUT_FLAT);

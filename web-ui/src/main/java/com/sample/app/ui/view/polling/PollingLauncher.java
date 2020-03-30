@@ -32,10 +32,16 @@ public class PollingLauncher extends PollingServicePanel<DocumentDetail, Documen
 		}
 	};
 
+	/**
+	 * Construct polling launcher.
+	 */
 	public PollingLauncher() {
 		this(null);
 	}
 
+	/**
+	 * @param document the polling launcher document details
+	 */
 	public PollingLauncher(final DocumentDetail document) {
 		setServiceCriteria(document);
 		getContentResultHolder().add(content);
@@ -48,6 +54,9 @@ public class PollingLauncher extends PollingServicePanel<DocumentDetail, Documen
 		getStartButton().setRenderAsLink(true);
 	}
 
+	/**
+	 * Configure for pop up only.
+	 */
 	public void popupOnly() {
 		link.setVisible(false);
 		setStartType(PollingStartType.AUTOMATIC);

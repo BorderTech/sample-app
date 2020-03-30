@@ -38,23 +38,14 @@ import org.apache.commons.logging.LogFactory;
  */
 public class SearchView extends WSection implements MessageContainer {
 
-	/**
-	 * The logger instance for this class.
-	 */
 	private static final Log LOG = LogFactory.getLog(SearchView.class);
 
 	private static final ClientServices CLIENT_SERVICES = ClientServicesHelperFactory.getInstance();
 
-	/**
-	 * Main controller.
-	 */
 	private final ClientApp app;
 
 	private final WTextField txtSearch = new WTextField();
 
-	/**
-	 * Messages for this view.
-	 */
 	private final WMessages messages = new ClientWMessages();
 
 	private final WMenu menu = new WMenu();
@@ -206,6 +197,11 @@ public class SearchView extends WSection implements MessageContainer {
 		table.setVisible(false);
 	}
 
+	/**
+	 * Refresh the client summary details.
+	 *
+	 * @param summary the client details.
+	 */
 	public void refreshClientSummary(final ClientDetail summary) {
 		List<ClientDetail> clients = (List<ClientDetail>) table.getBean();
 		int idx = clients.indexOf(summary);
