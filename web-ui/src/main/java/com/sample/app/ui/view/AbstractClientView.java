@@ -77,6 +77,9 @@ public abstract class AbstractClientView<T> extends WSection implements MessageC
 		return (T) getContent().getBean();
 	}
 
+	/**
+	 * @param viewMode the mode of the view
+	 */
 	public void setViewMode(final ViewMode viewMode) {
 		getOrCreateComponentModel().viewMode = viewMode;
 		if (viewMode == ViewMode.READONLY) {
@@ -84,6 +87,9 @@ public abstract class AbstractClientView<T> extends WSection implements MessageC
 		}
 	}
 
+	/**
+	 * @return the mode of the view
+	 */
 	public ViewMode getViewMode() {
 		return getComponentModel().viewMode;
 	}

@@ -5,21 +5,17 @@
 	<parent>
 		<groupId>com.github.bordertech.common</groupId>
 		<artifactId>qa-parent</artifactId>
-		<version>1.0.15</version>
+		<version>1.0.16</version>
 	</parent>
 
 	<packaging>pom</packaging>
 
 	<properties>
 		<bt.qa.skip>false</bt.qa.skip>
-		<!-- OWASP -->
-		<dependency-check.skip>true</dependency-check.skip>
 		<!-- Report Vulnerabilities. -->
 		<failBuildOnCVSS>11</failBuildOnCVSS>
 		<!-- Update every 168 hours (7 days) -->
 		<cveValidForHours>168</cveValidForHours>
-		<!-- Enforcer -->
-		<enforcer.skip>false</enforcer.skip>
 	</properties>
 
 	<name>sample-app-parent</name>
@@ -29,16 +25,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<profiles>
-		<!-- Quick build profile with testing and QA turned off -->
-		<profile>
-			<id>quick-build</id>
-			<properties>
-				<skipTests>true</skipTests>
-				<bt.qa.skip>true</bt.qa.skip>
-				<dependency-check.skip>true</dependency-check.skip>
-				<enforcer.skip>true</enforcer.skip>
-			</properties>
-		</profile>
+		<!-- Run smoke tests -->
 		<profile>
 			<id>smoke</id>
 			<properties>
@@ -211,7 +198,7 @@
 			<dependency>
 				<groupId>com.github.bordertech.config</groupId>
 				<artifactId>config</artifactId>
-				<version>1.0.5</version>
+				<version>1.0.6</version>
 			</dependency>
 
 			<!-- Jersey Client REST Implementation -->
