@@ -19,8 +19,20 @@ Follow these commands to fetch the source and build:
 
 1. git clone https://github.com/BorderTech/sample-app.git my-dir (first time only)
 2. cd my-dir
-3. mvn install -Pquick-build (Quick build profile has QA and Tests turned off)
 
+#### Quick build
+
+Quick build profile has QA and Tests turned off
+
+3. ```mvn install -Pquick-build```
+
+#### Full build
+
+On windows make sure chromedriver is in PATH, on *NIX in current user profile. Otherwise provide system property `-Dwebdriver.chrome.driver`. See [ChromeDriver](https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver) for more information.
+
+4. ```mvn install -Dwebdriver.chrome.driver=/path/to/chromedriver.exe```
+
+<a name="restservice"></a>
 ### Run REST Service
 
 Follow these commands to run a local instance of the REST Services:
@@ -29,6 +41,7 @@ Follow these commands to run a local instance of the REST Services:
 2. mvn lde-exec:run
 3. Access swagger ui at http://localhost:8082/lde/launchswagger
 
+<a name="webui"></a>
 ### Run Web UI
 
 Follow these commands to run a local instance of the Web UI:
@@ -97,11 +110,17 @@ mvn lde-exec:run -Dbordertech.lde.port.default=8888
 Sample command lines for running smoke tests.
 
 #### API Test
+
+See [Run REST Service](#restservice), ensure `localhost` is running ahead of executing `API Test`
+
 ```
 mvn test -Psmoke -pl rest-server-impl -Dserver.smoke.port=8086 -Dserver.smoke.host=http://localhost -Dserver.smoke.base=/lde/api/v1/
 ```
 
 #### UI Test
+
+See [Run Web UI](#webui), ensure `localhost` is running ahead of executing `UI Test`
+
 ```
 mvn test -Psmoke -pl web-ui -Dbordertech.webfriends.selenium.launchServer=false -Dbordertech.webfriends.selenium.serverUrl=http://localhost:8081/lde
 ```
