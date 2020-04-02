@@ -30,8 +30,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<!-- warName becomes the context of the application, it avoids container specific configuration -->
-					<warName>${artifactId}</warName>
+					<!-- Generated warName defaults to ${project.build.finalName}, but can be modified by setting property -Dweb.warName=web-war -->
+					<warName>${web.warName}</warName>
 				</configuration>
 			</plugin>
 		</plugins>
