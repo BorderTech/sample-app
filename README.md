@@ -111,14 +111,14 @@ The `app` and `web` war artifact name defaults to maven generated value `${proje
 
 Advantage of setting custom war name is, when deployed to a web container, the application context becomes `http://<host:port>/<custom-warName>`. It avoid the need for container specific configuration.
 
-#### Default behaviour
+##### Default name
 
 The `app` and `web` war artifact names will be `${project.build.finalName}`
 ```
 mvn install
 ```
 
-#### Custom name
+##### Custom name
 
 `app` war will be *apple-war*, and `web` war will be *orange-war*
 ```
