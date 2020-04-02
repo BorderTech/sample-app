@@ -16,6 +16,9 @@
 		<failBuildOnCVSS>11</failBuildOnCVSS>
 		<!-- Update every 168 hours (7 days) -->
 		<cveValidForHours>168</cveValidForHours>
+		<!-- warName defaults to maven's generated name, with option to modify it -->
+		<app.warName>${project.build.finalName}</app.warName>
+		<web.warName>${project.build.finalName}</web.warName>
 	</properties>
 
 	<name>sample-app-parent</name>

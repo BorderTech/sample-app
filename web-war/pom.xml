@@ -24,4 +24,17 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- Generated warName defaults to ${project.build.finalName}, but can be modified by setting property -Dweb.warName=web-war -->
+					<warName>${web.warName}</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

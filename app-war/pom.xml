@@ -30,6 +30,8 @@
 							<Ignore-Scanning-Archives>asm-all-repackaged-2.5.0.jar</Ignore-Scanning-Archives>
 						</manifestEntries>
 					</archive>
+					<!-- Generated warName defaults to ${project.build.finalName}, but can be modified by setting property -Dapp.warName=app-war -->
+					<warName>${app.warName}</warName>
 				</configuration>
 			</plugin>
 		</plugins>
