@@ -105,6 +105,30 @@ cd app-lde
 mvn lde-exec:run -Dbordertech.lde.port.default=8888
 ```
 
+#### Modify war name
+
+The `app` and `web` war artifact name defaults to maven generated value `${project.build.finalName}`. This behaviour can be modified by setting property `-Dapp.warName` and/or `-Dweb.warName`. If supplied, then only war file in `target` dir is impacted, artifacts published to maven repository (local or remote) is as per maven default.
+
+Advantage of setting custom war name is, when deployed to a web container, the application context becomes `http://<host:port>/<custom-warName>`. It avoid the need for container specific configuration.
+
+#### Default behaviour
+
+The `app` and `web` war artifact names will be `${project.build.finalName}`
+```
+mvn install
+```
+
+#### Custom name
+
+`app` war will be *apple-war*, and `web` war will be *orange-war*
+```
+mvn install -Dapp.warName=apple-war -Dweb.warName=orange-war
+```
+`app` and `web` war will be it's *artifactId* as defined in `pom.xml`
+```
+mvn install -Dapp.warName='${project.artifactId}' -Dweb.warName='${project.artifactId}'
+```
+
 ### Smoke tests
 
 Sample command lines for running smoke tests.
