@@ -14,7 +14,7 @@ before_install:
 - echo "MAVEN_OPTS='-Xmx512m -XX:MaxPermSize=128m'" > ~/.mavenrc
 - mvn clean
 ## Chromedriver setup
-- wget -N http://chromedriver.storage.googleapis.com/91.0.4472.19/chromedriver_linux64.zip -P ~/
+- wget -N http://chromedriver.storage.googleapis.com/88.0.4324.96/chromedriver_linux64.zip -P ~/
 - unzip ~/chromedriver_linux64.zip -d ~/
 - rm ~/chromedriver_linux64.zip
 - sudo mv -f ~/chromedriver /usr/local/share/
