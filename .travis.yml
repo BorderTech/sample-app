@@ -23,7 +23,7 @@ before_install:
 
 language: Java
 jdk:
- - oraclejdk8
+ - openjdk11
 
 ## Travis installs the project with the following maven command:- "mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
 script:
