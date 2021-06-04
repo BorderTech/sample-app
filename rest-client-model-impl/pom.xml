@@ -18,8 +18,10 @@
 	<description>REST API Client Implementation</description>
 
 	<properties>
-		<checkstyle.excludes>com/sample/app/rest/client/jersey/**/*</checkstyle.excludes>
+		<checkstyle.excludes>com/sample/app/rest/client/jersey/**/*, com/sample/app/model/client/**/*</checkstyle.excludes>
 		<spotbugs.excludeFilterFile>${basedir}/spotbugs-exclude-files.xml</spotbugs.excludeFilterFile>
+		<!-- Generated source failing on javadoc. Needs o be excluded. -->
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
 
 	<dependencies>
@@ -80,6 +82,18 @@
 			<artifactId>migbase64</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -117,7 +131,7 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>3.3.4</version>
+				<version>5.1.0</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -136,7 +150,7 @@
 								<importMapping>ErrorResponse=com.github.bordertech.restfriends.envelope.ErrorResponse</importMapping>
 							</importMappings>
 							<inputSpec>${project.build.directory}/swagger-json/swagger.json</inputSpec>
-							<language>java</language>
+							<generatorName>java</generatorName>
 							<library>jersey2</library>
 							<apiPackage>com.sample.app.rest.client.jersey.v1.api</apiPackage>
 							<invokerPackage>com.sample.app.rest.client.jersey.v1.invoker</invokerPackage>
@@ -212,6 +226,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

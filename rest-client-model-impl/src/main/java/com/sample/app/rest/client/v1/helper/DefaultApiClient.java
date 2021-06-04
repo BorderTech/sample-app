@@ -31,6 +31,8 @@ public class DefaultApiClient extends ApiClient {
 	 */
 	public DefaultApiClient() {
 		setBasePath(getRestUri());
+		// Force API client to use base URL by clearing the default server index
+		setServerIndex(null);
 		ObjectMapper mapper = json.getContext(null);
 		// Turn off the generated ENUM options
 		mapper.disable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
@@ -39,15 +41,13 @@ public class DefaultApiClient extends ApiClient {
 	}
 
 	@Override
-	public <T> ApiResponse<T> invokeAPI(final String path, final String method, final List<Pair> queryParams,
-			final Object body, final Map<String, String> headerParams, final Map<String, Object> formParams,
-			final String accept, final String contentType, final String[] authNames, final GenericType<T> returnType)
-			throws ApiException {
+	public <T> ApiResponse<T> invokeAPI(final String path, final String method, final List<Pair> queryParams, final Object body, final Map<String, String> headerParams, final Map<String, String> cookieParams, final Map<String, Object> formParams, final String accept, final String contentType, final String[] authNames, final GenericType<T> returnType, final boolean isBodyNullable) throws ApiException {
 		Object fixBody = body;
 		// Pass a Empty String instead of NULL Body
 		if ("PUT".equals(method) && body == null) {
 			fixBody = "";
 		}
-		return super.invokeAPI(path, method, queryParams, fixBody, headerParams, formParams, accept, contentType, authNames, returnType);
+		return super.invokeAPI(path, method, queryParams, fixBody, headerParams, cookieParams, formParams, accept, contentType, authNames, returnType, isBodyNullable); //To change body of generated methods, choose Tools | Templates.
 	}
+
 }
