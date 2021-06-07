@@ -75,11 +75,11 @@ public class ClientServicesResourceImpl implements ClientServicesResource {
 	}
 
 	@Override
-	public ClientDetailResponse createClient(final ClientDetail detail)
+	public Response createClient(final ClientDetail detail)
 			throws RestBusinessException {
 		try {
 			ClientDetail resp = backing.createClient(detail);
-			return new ClientDetailResponse(resp);
+			return Response.status(Response.Status.CREATED).entity(new ClientDetailResponse(resp)).build();
 		} catch (ServiceException e) {
 			throw new RestBusinessException(e.getMessage(), e);
 		}

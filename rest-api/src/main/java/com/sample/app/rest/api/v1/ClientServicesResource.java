@@ -32,8 +32,7 @@ import javax.ws.rs.core.Response;
 @Api(value = "ClientServices")
 @Path(value = "v1")
 @ApiResponses(value = {
-	@ApiResponse(code = 400, message = "Invalid request", response = ErrorResponse.class)
-	,
+	@ApiResponse(code = 400, message = "Invalid request", response = ErrorResponse.class),
 	@ApiResponse(code = 500, message = "Internal error", response = ErrorResponse.class)
 })
 @Consumes(MediaType.APPLICATION_JSON)
@@ -104,7 +103,10 @@ public interface ClientServicesResource {
 	@POST
 	@Path("clients")
 	@ApiOperation(value = "Create client")
-	public ClientDetailResponse createClient(
+	@ApiResponses(value = {
+		@ApiResponse(code = 201, message = "Created OK", response = ClientDetailResponse.class)
+	})
+	public Response createClient(
 			@ApiParam(value = "Client details") ClientDetail detail)
 			throws RestBusinessException;
 
