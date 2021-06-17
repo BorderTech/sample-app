@@ -1,6 +1,9 @@
 package com.sample.app.model.client;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,6 +21,10 @@ public class ClientDetail implements Serializable {
 	@Email
 	private String email;
 	private AddressDetail address;
+
+	private Date sampleDate;
+	private LocalDate sampleLocalDate;
+	private LocalDateTime sampleLocalDateTime;
 
 	/**
 	 * @return the client id
@@ -87,6 +94,48 @@ public class ClientDetail implements Serializable {
 	 */
 	public void setAddress(final AddressDetail address) {
 		this.address = address;
+	}
+
+	/**
+	 * @return the sample date
+	 */
+	public Date getSampleDate() {
+		return sampleDate;
+	}
+
+	/**
+	 * @param sampleDate the sample date
+	 */
+	public void setSampleDate(final Date sampleDate) {
+		this.sampleDate = sampleDate;
+	}
+
+	/**
+	 * @return the sample local date
+	 */
+	public LocalDate getSampleLocalDate() {
+		return sampleLocalDate;
+	}
+
+	/**
+	 * @param sampleLocalDate the sample local date
+	 */
+	public void setSampleLocalDate(final LocalDate sampleLocalDate) {
+		this.sampleLocalDate = sampleLocalDate;
+	}
+
+	/**
+	 * @return the sample local date time
+	 */
+	public LocalDateTime getSampleLocalDateTime() {
+		return sampleLocalDateTime;
+	}
+
+	/**
+	 * @param sampleLocalDateTime the sample local date time
+	 */
+	public void setSampleLocalDateTime(final LocalDateTime sampleLocalDateTime) {
+		this.sampleLocalDateTime = sampleLocalDateTime;
 	}
 
 	@Override
