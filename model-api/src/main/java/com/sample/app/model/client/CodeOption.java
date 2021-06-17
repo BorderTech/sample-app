@@ -2,13 +2,16 @@ package com.sample.app.model.client;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Option with code and description.
  */
 public class CodeOption implements Serializable {
 
+	@NotBlank
 	private final String code;
+	@NotBlank
 	private final String description;
 
 	/**

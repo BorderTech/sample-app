@@ -3,6 +3,7 @@ package com.sample.app.model.client;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Document details.
@@ -10,8 +11,11 @@ import java.util.Objects;
 public class DocumentDetail implements Serializable {
 
 	private String documentId;
+	@NotBlank
 	private String description;
+	@NotBlank
 	private Date submitDate;
+	@NotBlank
 	private String resourcePath;
 
 	/**

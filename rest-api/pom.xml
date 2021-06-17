@@ -23,6 +23,14 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- Bean validation -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- Data envelope -->
 		<dependency>
 			<groupId>com.github.bordertech.restfriends</groupId>

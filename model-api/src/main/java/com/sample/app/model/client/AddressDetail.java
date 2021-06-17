@@ -1,16 +1,22 @@
 package com.sample.app.model.client;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Address details.
  */
 public class AddressDetail implements Serializable {
 
+	@NotBlank
 	private String street;
+	@NotBlank
 	private String suburb;
+	@NotBlank
 	private StateType state;
+	@NotBlank
 	private String postcode;
+	@NotBlank
 	private String countryCode;
 
 	/**

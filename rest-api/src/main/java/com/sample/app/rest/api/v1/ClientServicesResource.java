@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -107,7 +108,7 @@ public interface ClientServicesResource {
 		@ApiResponse(code = 201, message = "Created OK", response = ClientDetailResponse.class)
 	})
 	public Response createClient(
-			@ApiParam(value = "Client details") ClientDetail detail)
+			@Valid @ApiParam(value = "Client details") ClientDetail detail)
 			throws RestBusinessException;
 
 	/**
@@ -123,7 +124,7 @@ public interface ClientServicesResource {
 	@ApiOperation(value = "Update client")
 	public ClientDetailResponse updateClient(
 			@ApiParam(value = "Client id") @PathParam("id") String clientId,
-			@ApiParam(value = "Client details") ClientDetail detail)
+			@Valid @ApiParam(value = "Client details") ClientDetail detail)
 			throws RestBusinessException;
 
 	/**

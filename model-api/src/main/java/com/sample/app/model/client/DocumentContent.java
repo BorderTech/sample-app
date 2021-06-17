@@ -2,6 +2,8 @@ package com.sample.app.model.client;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * Document content details.
@@ -9,8 +11,11 @@ import java.util.Objects;
 public class DocumentContent implements Serializable {
 
 	private final String documentId;
+	@NotNull
 	private final byte[] bytes;
+	@NotBlank
 	private final String filename;
+	@NotBlank
 	private final String mimeType;
 
 	/**

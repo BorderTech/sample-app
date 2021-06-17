@@ -2,6 +2,8 @@ package com.sample.app.model.client;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Client details.
@@ -9,8 +11,11 @@ import java.util.Objects;
 public class ClientDetail implements Serializable {
 
 	private String clientId;
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String abn;
+	@Email
 	private String email;
 	private AddressDetail address;
 

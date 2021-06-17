@@ -11,10 +11,9 @@ import javax.servlet.annotation.WebServlet;
 		initParams
 		= {
 			// Tell Jersey to use JSON
-			@WebInitParam(name = "com.sun.jersey.api.json.POJOMappingFeature", value = "true")
-			,
+			@WebInitParam(name = "com.sun.jersey.api.json.POJOMappingFeature", value = "true"),
 			// Tell Jersey the Application
-			@WebInitParam(name = "javax.ws.rs.Application", value = "com.sample.app.rest.servlet.ClientRestApplication")
+			@WebInitParam(name = "javax.ws.rs.Application", value = "com.sample.app.rest.servlet.MyApplicationWrapper")
 		},
 		loadOnStartup = 1
 )
