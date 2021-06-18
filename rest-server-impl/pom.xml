@@ -14,7 +14,6 @@
 	<name>rest-server-impl</name>
 
 	<properties>
-		<enforcer.fail>false</enforcer.fail>
 		<!-- Needed for tomcat jar lookups -->
 		<surefire.useSystemClassLoader>false</surefire.useSystemClassLoader>
 	</properties>
@@ -38,14 +37,12 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-bean-validation</artifactId>
-			<version>2.29</version>
 		</dependency>
 
 		<!-- Support LocalDate and LocalDateTime -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>2.9.10</version>
 		</dependency>
 
 		<!-- Didums -->

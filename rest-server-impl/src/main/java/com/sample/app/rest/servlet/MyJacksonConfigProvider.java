@@ -34,6 +34,7 @@ public class MyJacksonConfigProvider implements ContextResolver<ObjectMapper> {
 		defaultObjectMapper = new ObjectMapper();
 		// Enable Jackson java8 Support (Local date and time)
 		defaultObjectMapper.registerModule(new JavaTimeModule());
+		// Disable writing as Timestamp so dates are written in the correct date format.
 		defaultObjectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		// Prevent exception when encountering unknown property:
 		defaultObjectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);

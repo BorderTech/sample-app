@@ -7,12 +7,18 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
 /**
- * Create a Jersey ResourceConfig to enable access to more config.
+ * Shows how to create a Jersey ResourceConfig to enable access to more config.
+ * <p>
+ * This application class can be registered in the {@link ClientRestServlet}.
+ * </p>
+ *
+ * @see ClientRestServlet
+ * @see ClientRestApplication
  */
 public class MyRestApplication extends ResourceConfig {
 
 	/**
-	 * Construct the resource with the REST application.
+	 * Construct the resource and add the needed providers.
 	 */
 	public MyRestApplication() {
 

@@ -227,10 +227,30 @@
 				<artifactId>jersey-media-json-jackson</artifactId>
 				<version>2.29</version>
 			</dependency>
+
+			<!-- Jersey Bean Validation -->
+			<dependency>
+				<groupId>org.glassfish.jersey.ext</groupId>
+				<artifactId>jersey-bean-validation</artifactId>
+				<version>2.29</version>
+			</dependency>
+			<!-- Bean validation API -->
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>2.0.1.Final</version>
+			</dependency>
+
 			<!-- Using version 2.9.9 to match restfriends-jersey -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
 				<artifactId>jackson-datatype-joda</artifactId>
+				<version>2.9.9</version>
+			</dependency>
+			<!-- Support LocalDate and LocalDateTime -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-jsr310</artifactId>
 				<version>2.9.9</version>
 			</dependency>
 
