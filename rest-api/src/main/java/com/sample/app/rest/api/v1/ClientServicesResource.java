@@ -26,6 +26,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.linking.Binding;
+import org.glassfish.jersey.linking.ProvideLink;
 
 /**
  * Sample REST Resource call a backing service implementation.
@@ -87,6 +89,8 @@ public interface ClientServicesResource {
 	 * @return the client details
 	 * @throws RestBusinessException a business exception
 	 */
+	@ProvideLink(value = ClientDetailResponse.class, rel = "self", bindings = {
+		@Binding(name = "id", value = "${entity.data.clientId}")})
 	@GET
 	@Path("clients/{id}")
 	@ApiOperation(value = "Retrieve client")

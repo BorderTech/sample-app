@@ -39,6 +39,12 @@
 			<artifactId>jersey-bean-validation</artifactId>
 		</dependency>
 
+		<!-- Jersey declarative linking support -->
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-declarative-linking</artifactId>
+		</dependency>
+
 		<!-- Support LocalDate and LocalDateTime -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>

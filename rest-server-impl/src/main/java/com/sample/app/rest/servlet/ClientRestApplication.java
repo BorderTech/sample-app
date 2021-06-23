@@ -2,6 +2,7 @@ package com.sample.app.rest.servlet;
 
 import com.github.bordertech.swagger.application.SwaggerRestApplication;
 import com.sample.app.rest.server.v1.ClientServicesResourceImpl;
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 
 /**
  * ClientREST Swagger/Jersey Application.
@@ -20,6 +21,8 @@ public class ClientRestApplication extends SwaggerRestApplication {
 		super(
 				// Client Service
 				ClientServicesResourceImpl.class,
+				// Declarative linking Feature
+				DeclarativeLinkingFeature.class,
 				// The jackson config
 				MyJacksonConfigProvider.class,
 				// Handle the date time exceptions

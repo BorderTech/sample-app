@@ -29,6 +29,13 @@
 			<artifactId>restfriends-envelope</artifactId>
 		</dependency>
 
+		<!-- Jersey declarative linking support -->
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-declarative-linking</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- Bean validation -->
 		<dependency>
 			<groupId>javax.validation</groupId>

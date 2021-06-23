@@ -241,6 +241,13 @@
 				<version>2.0.1.Final</version>
 			</dependency>
 
+			<!-- Jersey declarative linking support -->
+			<dependency>
+				<groupId>org.glassfish.jersey.ext</groupId>
+				<artifactId>jersey-declarative-linking</artifactId>
+				<version>2.29</version>
+			</dependency>
+
 			<!-- Using version 2.9.9 to match restfriends-jersey -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>

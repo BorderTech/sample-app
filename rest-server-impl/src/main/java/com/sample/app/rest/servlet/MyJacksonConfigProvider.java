@@ -8,9 +8,10 @@ package com.sample.app.rest.servlet;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -32,13 +33,19 @@ public class MyJacksonConfigProvider implements ContextResolver<ObjectMapper> {
 	 */
 	public MyJacksonConfigProvider() {
 		defaultObjectMapper = new ObjectMapper();
-		// Enable Jackson java8 Support (Local date and time)
+
+		// Enable Jackson java8 Support (LocalDate and LocalDateTime)
 		defaultObjectMapper.registerModule(new JavaTimeModule());
 		// Disable writing as Timestamp so dates are written in the correct date format.
 		defaultObjectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
 		// Prevent exception when encountering unknown property:
 		defaultObjectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
+		// Register custom declarative link serializer
+		SimpleModule simpleModule = new SimpleModule();
+		simpleModule.addSerializer(Link.class, new MyLinkSerializer());
+		defaultObjectMapper.registerModule(simpleModule);
 	}
 
 	@Override
@@ -46,16 +53,4 @@ public class MyJacksonConfigProvider implements ContextResolver<ObjectMapper> {
 		return defaultObjectMapper;
 	}
 
-	/**
-	 * @return the default mapper
-	 */
-	public static ObjectMapper createDefaultMapper() {
-		final ObjectMapper jackson = new ObjectMapper();
-		// Use JODA for Timestamp Formatting
-		jackson.registerModule(new JodaModule());
-		jackson.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		// Prevent exception when encountering unknown property:
-		jackson.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		return jackson;
-	}
 }

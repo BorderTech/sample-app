@@ -3,6 +3,7 @@ package com.sample.app.rest.servlet;
 import com.github.bordertech.swagger.application.SwaggerRestApplication;
 import com.sample.app.rest.server.v1.ClientServicesResourceImpl;
 import javax.ws.rs.core.Application;
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
@@ -38,6 +39,9 @@ public class MyRestApplication extends ResourceConfig {
 		registerClasses(MyHandleValidationExceptions.class);
 		// Now you can expect validation errors to be sent to the client.
 		property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
+
+		// Register Declarative Linking
+		register(DeclarativeLinkingFeature.class);
 	}
 
 }
