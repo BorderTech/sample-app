@@ -12,15 +12,15 @@ import com.github.bordertech.wcomponents.WebUtilities;
 import com.github.bordertech.wcomponents.addons.common.WDiv;
 import com.github.bordertech.wcomponents.addons.polling.PollingServicePanel;
 import com.github.bordertech.wcomponents.addons.polling.PollingStartType;
-import com.sample.app.model.client.DocumentContent;
-import com.sample.app.model.client.DocumentDetail;
+import com.sample.app.rest.v1.model.DocumentContentDTO;
+import com.sample.app.rest.v1.model.DocumentDetailDTO;
 import com.sample.app.ui.view.DocumentView;
 import javax.cache.Cache;
 
 /**
  * Polling panel that automatically loads document content.
  */
-public class PollingViewer extends PollingServicePanel<DocumentDetail, DocumentContent> {
+public class PollingViewer extends PollingServicePanel<DocumentDetailDTO, DocumentContentDTO> {
 
 	private final WContent content = new WContent();
 
@@ -34,7 +34,7 @@ public class PollingViewer extends PollingServicePanel<DocumentDetail, DocumentC
 	/**
 	 * @param document the document details to view
 	 */
-	public PollingViewer(final DocumentDetail document) {
+	public PollingViewer(final DocumentDetailDTO document) {
 		setServiceCriteria(document);
 		getContentResultHolder().add(content);
 		// Service action
@@ -47,7 +47,7 @@ public class PollingViewer extends PollingServicePanel<DocumentDetail, DocumentC
 	protected void handleInitResultContent(final Request request) {
 		super.handleInitResultContent(request);
 		// Document Content
-		DocumentContent doc = getServiceResult().getResult();
+		DocumentContentDTO doc = getServiceResult().getResult();
 		// Setup the viewing option (based on MIME Type)
 		WDiv holder = getContentResultHolder();
 		String mimeType = doc.getMimeType();

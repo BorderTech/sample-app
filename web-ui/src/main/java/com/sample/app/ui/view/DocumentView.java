@@ -3,6 +3,7 @@ package com.sample.app.ui.view;
 import com.github.bordertech.taskmaster.service.ResultHolder;
 import com.github.bordertech.taskmaster.service.ServiceAction;
 import com.github.bordertech.taskmaster.service.ServiceHelper;
+import com.github.bordertech.taskmaster.service.exception.ServiceException;
 import com.github.bordertech.taskmaster.service.util.ServiceCacheUtil;
 import com.github.bordertech.wcomponents.Action;
 import com.github.bordertech.wcomponents.ActionEvent;
@@ -15,7 +16,6 @@ import com.github.bordertech.wcomponents.SimpleBeanBoundTableModel;
 import com.github.bordertech.wcomponents.Size;
 import com.github.bordertech.wcomponents.WAjaxControl;
 import com.github.bordertech.wcomponents.WButton;
-import com.github.bordertech.wcomponents.WDateField;
 import com.github.bordertech.wcomponents.WImage;
 import com.github.bordertech.wcomponents.WMenu;
 import com.github.bordertech.wcomponents.WMenuItem;
@@ -29,14 +29,14 @@ import com.github.bordertech.wcomponents.WText;
 import com.github.bordertech.wcomponents.addons.common.WDiv;
 import com.github.bordertech.wcomponents.addons.common.relative.WLibTab;
 import com.github.bordertech.wcomponents.layout.ColumnLayout;
-import com.sample.app.model.client.DocumentContent;
-import com.sample.app.model.client.DocumentDetail;
-import com.sample.app.model.exception.ServiceException;
-import com.sample.app.model.services.ClientServices;
+import com.sample.app.ui.util.V1ApiClientHelperFactory;
+import com.sample.app.rest.v1.api.V1Api;
+import com.sample.app.rest.v1.model.DocumentContentDTO;
+import com.sample.app.rest.v1.model.DocumentDetailDTO;
 import com.sample.app.ui.application.ClientApp;
 import com.sample.app.ui.common.ClientWMessages;
 import com.sample.app.ui.common.Constants;
-import com.sample.app.ui.util.ClientServicesHelperFactory;
+import com.sample.app.ui.common.WDateFieldLocal;
 import com.sample.app.ui.view.polling.PollingLauncher;
 import com.sample.app.ui.view.polling.PollingViewer;
 import java.util.ArrayList;
@@ -59,18 +59,18 @@ public class DocumentView extends WSection implements MessageContainer {
 	/**
 	 * Retrieve documents action.
 	 */
-	public static final ServiceAction<DocumentDetail, DocumentContent> RETREIVE_DOC_ACTION = new ServiceAction<DocumentDetail, DocumentContent>() {
+	public static final ServiceAction<DocumentDetailDTO, DocumentContentDTO> RETREIVE_DOC_ACTION = new ServiceAction<DocumentDetailDTO, DocumentContentDTO>() {
 		@Override
-		public DocumentContent service(final DocumentDetail document) throws Exception {
+		public DocumentContentDTO service(final DocumentDetailDTO document) throws Exception {
 			try {
-				return CLIENT_SERVICES.retrieveDocument(document.getDocumentId());
+				return CLIENT_SERVICES.retrieveDocument(document.getDocumentId()).getData();
 			} catch (Exception e) {
 				throw new ServiceException("Error retrieveing document [" + document + "]. " + e.getMessage(), e);
 			}
 		}
 	};
 
-	private static final ClientServices CLIENT_SERVICES = ClientServicesHelperFactory.getInstance();
+	private static final V1Api CLIENT_SERVICES = V1ApiClientHelperFactory.getInstance();
 
 	private final ClientApp app;
 
@@ -253,7 +253,7 @@ public class DocumentView extends WSection implements MessageContainer {
 		PollingLauncher launcherLink = new PollingLauncher() {
 			@Override
 			protected void handleInitPollingPanel(final Request request) {
-				DocumentDetail doc = (DocumentDetail) getBean();
+				DocumentDetailDTO doc = (DocumentDetailDTO) getBean();
 				setServiceCriteria(doc);
 				super.handleInitPollingPanel(request);
 			}
@@ -263,7 +263,7 @@ public class DocumentView extends WSection implements MessageContainer {
 		table.setMargin(Constants.SOUTH_MARGIN_LARGE);
 		table.addColumn(new WTableColumn("ID", new WText()));
 		table.addColumn(new WTableColumn("Description", new WText()));
-		table.addColumn(new WTableColumn("Submitted", new WDateField()));
+		table.addColumn(new WTableColumn("Submitted", new WDateFieldLocal()));
 		table.addColumn(new WTableColumn("Link", launcherLink));
 		table.setStripingType(WTable.StripingType.ROWS);
 		table.setNoDataMessage("No documents found.");
@@ -317,7 +317,7 @@ public class DocumentView extends WSection implements MessageContainer {
 		if (!isInitialised()) {
 			try {
 				// Dummy service to load the documents tables
-				List<DocumentDetail> docs = CLIENT_SERVICES.retrieveClientDocuments("dummyId");
+				List<DocumentDetailDTO> docs = CLIENT_SERVICES.retrieveClientDocuments("dummyId").getData();
 				if (docs != null && !docs.isEmpty()) {
 					setDocuments(docs);
 					table.sort(0, true);
@@ -340,7 +340,7 @@ public class DocumentView extends WSection implements MessageContainer {
 	 * Clear the Cache.
 	 */
 	protected void doHandleClearCache() {
-		for (DocumentDetail doc : getDocuments()) {
+		for (DocumentDetailDTO doc : getDocuments()) {
 			CACHE.remove(doc.getDocumentId());
 		}
 	}
@@ -348,7 +348,7 @@ public class DocumentView extends WSection implements MessageContainer {
 	protected void doHandleLaunch() {
 		ajaxPanel.reset();
 		// TODO Can replace with a WRepeater
-		for (DocumentDetail selected : orderSelectedDocuments()) {
+		for (DocumentDetailDTO selected : orderSelectedDocuments()) {
 			PollingLauncher launcher = new PollingLauncher(selected);
 			launcher.popupOnly();
 			ajaxPanel.add(launcher);
@@ -376,7 +376,7 @@ public class DocumentView extends WSection implements MessageContainer {
 	protected void doHandleShowOnPage() {
 		ajaxPanel.reset();
 		// Save the ordered documents (on the AJAX Panel)
-		ArrayList<DocumentDetail> docs = orderSelectedDocuments();
+		ArrayList<DocumentDetailDTO> docs = orderSelectedDocuments();
 		setSelectedDocs(docs);
 
 		// Setup the view
@@ -401,7 +401,7 @@ public class DocumentView extends WSection implements MessageContainer {
 	}
 
 	protected void addSelectedToContainer(final MutableContainer container) {
-		for (DocumentDetail selected : getSelectedDocs()) {
+		for (DocumentDetailDTO selected : getSelectedDocs()) {
 			WPanel panel = new WPanel();
 			panel.setMargin(new Margin(Size.ZERO, Size.ZERO, Size.LARGE, Size.ZERO));
 			container.add(panel);
@@ -426,7 +426,7 @@ public class DocumentView extends WSection implements MessageContainer {
 
 		// Setup tabs
 		int idx = 1;
-		for (DocumentDetail selected : getSelectedDocs()) {
+		for (DocumentDetailDTO selected : getSelectedDocs()) {
 			WPanel panel = new WPanel();
 			int nameIdx = selected.getResourcePath().lastIndexOf("/");
 			String tabName = nameIdx == -1 ? selected.getResourcePath() : selected.getResourcePath().substring(nameIdx + 1);
@@ -444,7 +444,7 @@ public class DocumentView extends WSection implements MessageContainer {
 	}
 
 	private void doHandleTabChanged(final int current) {
-		List<DocumentDetail> docs = getSelectedDocs();
+		List<DocumentDetailDTO> docs = getSelectedDocs();
 		if (docs == null || docs.isEmpty()) {
 			return;
 		}
@@ -464,7 +464,7 @@ public class DocumentView extends WSection implements MessageContainer {
 		setPrevIndex(current);
 		// Check if we can preload a document
 		if (load > -1 && load < docs.size()) {
-			DocumentDetail doc = docs.get(load);
+			DocumentDetailDTO doc = docs.get(load);
 			// Retrieve Document (Will only start if it is not in the cache)
 			try {
 				ServiceHelper.submitAsync(doc, RETREIVE_DOC_ACTION, CACHE, doc.getDocumentId());
@@ -474,12 +474,12 @@ public class DocumentView extends WSection implements MessageContainer {
 		}
 	}
 
-	private List<DocumentDetail> getSelectedDocs() {
-		List<DocumentDetail> selected = (List<DocumentDetail>) ajaxPanel.getAttribute("docs");
+	private List<DocumentDetailDTO> getSelectedDocs() {
+		List<DocumentDetailDTO> selected = (List<DocumentDetailDTO>) ajaxPanel.getAttribute("docs");
 		return selected == null ? Collections.EMPTY_LIST : selected;
 	}
 
-	private void setSelectedDocs(final ArrayList<DocumentDetail> docs) {
+	private void setSelectedDocs(final ArrayList<DocumentDetailDTO> docs) {
 		ajaxPanel.setAttribute("docs", docs);
 	}
 
@@ -492,24 +492,24 @@ public class DocumentView extends WSection implements MessageContainer {
 		ajaxPanel.setAttribute("prev", prev);
 	}
 
-	private void setDocuments(final List<DocumentDetail> docs) {
+	private void setDocuments(final List<DocumentDetailDTO> docs) {
 		table.setBean(docs);
 	}
 
-	private List<DocumentDetail> getDocuments() {
-		List<DocumentDetail> docs = (List<DocumentDetail>) table.getBean();
+	private List<DocumentDetailDTO> getDocuments() {
+		List<DocumentDetailDTO> docs = (List<DocumentDetailDTO>) table.getBean();
 		return docs == null ? Collections.EMPTY_LIST : docs;
 	}
 
-	private ArrayList<DocumentDetail> orderSelectedDocuments() {
+	private ArrayList<DocumentDetailDTO> orderSelectedDocuments() {
 
 		// Get all the documents
-		List<DocumentDetail> docs = getDocuments();
+		List<DocumentDetailDTO> docs = getDocuments();
 
 		// Put the documents in the sort order (if required)
 		if (table.isSorted()) {
 			int[] sortIdx = table.getTableModel().sort(table.getSortColumnIndex(), table.isSortAscending());
-			List<DocumentDetail> sorted = new ArrayList<>(docs.size());
+			List<DocumentDetailDTO> sorted = new ArrayList<>(docs.size());
 			for (int idx : sortIdx) {
 				sorted.add(docs.get(idx));
 			}
@@ -517,9 +517,9 @@ public class DocumentView extends WSection implements MessageContainer {
 		}
 
 		// Build a list of the selected docs in the sort order
-		ArrayList<DocumentDetail> sorted = new ArrayList<>();
-		Set<DocumentDetail> selected = (Set<DocumentDetail>) table.getSelectedRows();
-		for (DocumentDetail doc : docs) {
+		ArrayList<DocumentDetailDTO> sorted = new ArrayList<>();
+		Set<DocumentDetailDTO> selected = (Set<DocumentDetailDTO>) table.getSelectedRows();
+		for (DocumentDetailDTO doc : docs) {
 			if (selected.contains(doc)) {
 				sorted.add(doc);
 				if (selected.size() == sorted.size()) {

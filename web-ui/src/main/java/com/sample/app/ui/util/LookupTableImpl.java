@@ -1,9 +1,10 @@
 package com.sample.app.ui.util;
 
+import com.github.bordertech.wcomponents.Option;
 import com.github.bordertech.wcomponents.util.LookupTable;
 import com.github.bordertech.wcomponents.util.SystemException;
-import com.sample.app.model.client.CodeOption;
-import com.sample.app.model.services.ClientServices;
+import com.sample.app.rest.v1.api.V1Api;
+import com.sample.app.rest.v1.model.CodeOptionDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class LookupTableImpl implements LookupTable {
 	private static final String WITH_NULL_OPTION = "WITH-NULL";
 	private static final String NO_NULL_OPTION = "NO-NULL";
 	private static final String CACHE_NAME = "client-lookuptable";
-	private static final ClientServices CLIENT_SERVICES = ClientServicesHelperFactory.getInstance();
+	private static final V1Api CLIENT_SERVICES = V1ApiClientHelperFactory.getInstance();
 	private static final String CACHE_DELIM = "#";
 
 	@Override
@@ -45,7 +46,12 @@ public class LookupTableImpl implements LookupTable {
 
 	private List<?> loadTable(final String table) {
 		try {
-			List options = CLIENT_SERVICES.retrieveCodes(table);
+			List<CodeOptionDTO> items = CLIENT_SERVICES.retrieveCodes(table).getData();
+			// Translate to WComponent Options
+			List options = new ArrayList();
+			for (CodeOptionDTO item : items) {
+				options.add(new SelectOption(item.getCode(), item.getDescription()));
+			}
 			return options;
 		} catch (Exception e) {
 			throw new SystemException("Could not load table [" + table + "]. " + e.getMessage(), e);
@@ -76,8 +82,8 @@ public class LookupTableImpl implements LookupTable {
 		if (table instanceof TableDetails && ((TableDetails) table).isWithNull() && entry == null) {
 			return ((TableDetails) table).getNullCode();
 		}
-		if (entry instanceof CodeOption) {
-			return ((CodeOption) entry).getCode();
+		if (entry instanceof Option) {
+			return ((Option) entry).getCode();
 		}
 		return null;
 	}
@@ -90,8 +96,8 @@ public class LookupTableImpl implements LookupTable {
 		if (entry == null && table instanceof TableDetails && ((TableDetails) table).isWithNull()) {
 			return ((TableDetails) table).getNullDescription();
 		}
-		if (entry instanceof CodeOption) {
-			return ((CodeOption) entry).getDescription();
+		if (entry instanceof Option) {
+			return ((Option) entry).getDesc();
 		}
 		return "";
 	}
@@ -178,6 +184,45 @@ public class LookupTableImpl implements LookupTable {
 		public String getNullDescription() {
 			return isWithNull() ? NULL_DESCRIPTION : null;
 		}
+	}
+
+	/**
+	 * Hold code table options in WComponents option format.
+	 */
+	public static class SelectOption implements Option, Serializable {
+
+		private final String code;
+		private final String desc;
+
+		/**
+		 * @param code the code key
+		 * @param desc the code description
+		 */
+		public SelectOption(final String code, final String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		@Override
+		public String getCode() {
+			return code;
+		}
+
+		@Override
+		public String getDesc() {
+			return desc;
+		}
+
+		@Override
+		public int hashCode() {
+			return code.hashCode();
+		}
+
+		@Override
+		public boolean equals(final Object obj) {
+			return obj instanceof SelectOption && Objects.equals(((SelectOption) obj).getCode(), code);
+		}
+
 	}
 
 }

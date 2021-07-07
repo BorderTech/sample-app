@@ -3,19 +3,19 @@ package com.sample.app.model.bdd.steps;
 import com.sample.app.model.client.ClientDetail;
 import com.sample.app.model.exception.ClientNotFoundException;
 import com.sample.app.model.exception.ServiceException;
-import com.sample.app.model.impl.ClientServicesMockImpl;
-import com.sample.app.model.services.ClientServices;
+import com.sample.app.model.impl.AppServicesMockImpl;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import com.sample.app.model.services.AppServices;
 
 /**
  * Retrieve client steps.
  */
 public class RetrieveClientSteps {
 
-	private final ClientServices backing = new ClientServicesMockImpl();
+	private final AppServices backing = new AppServicesMockImpl();
 
 	private ClientDetail client;
 	private Exception error;

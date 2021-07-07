@@ -1,24 +1,24 @@
 package com.sample.app.ui.view;
 
+import com.github.bordertech.taskmaster.service.exception.ServiceException;
 import com.github.bordertech.wcomponents.HeadingLevel;
 import com.github.bordertech.wcomponents.WEmailField;
 import com.github.bordertech.wcomponents.WFieldLayout;
 import com.github.bordertech.wcomponents.WHeading;
 import com.github.bordertech.wcomponents.WPanel;
 import com.github.bordertech.wcomponents.WTextField;
-import com.sample.app.model.client.ClientDetail;
-import com.sample.app.model.exception.ServiceException;
-import com.sample.app.model.services.ClientServices;
+import com.sample.app.ui.util.V1ApiClientHelperFactory;
+import com.sample.app.rest.v1.api.V1Api;
+import com.sample.app.rest.v1.model.ClientDetailDTO;
 import com.sample.app.ui.application.ClientApp;
 import com.sample.app.ui.common.AddressPanel;
-import com.sample.app.ui.util.ClientServicesHelperFactory;
 
 /**
  * Client view.
  */
-public class ClientView extends AbstractClientView<ClientDetail> {
+public class ClientView extends AbstractClientView<ClientDetailDTO> {
 
-	private static final ClientServices CLIENT_SERVICES = ClientServicesHelperFactory.getInstance();
+	private static final V1Api CLIENT_SERVICES = V1ApiClientHelperFactory.getInstance();
 
 	/**
 	 * @param app the client app.
@@ -70,19 +70,23 @@ public class ClientView extends AbstractClientView<ClientDetail> {
 	}
 
 	@Override
-	protected void doCreateServiceCall(final ClientDetail bean) throws ServiceException {
-		String id = CLIENT_SERVICES.createClient(bean).getClientId();
-		getApp().getMessages().success("Client [" + id + "] created.");
+	protected void doCreateServiceCall(final ClientDetailDTO bean) throws ServiceException {
+		try {
+			String id = CLIENT_SERVICES.createClient(bean).getData().getClientId();
+			getApp().getMessages().success("Client [" + id + "] created.");
+		} catch (Exception e) {
+			throw new ServiceException("Error creating client. " + e.getMessage(), e);
+		}
 	}
 
 	@Override
-	protected void doUpdateServiceCall(final ClientDetail bean) throws ServiceException {
-		CLIENT_SERVICES.updateClient(bean);
+	protected void doUpdateServiceCall(final ClientDetailDTO bean) throws ServiceException {
+		CLIENT_SERVICES.updateClient(bean.getClientId(), bean);
 		getApp().getMessages().success("Client updated.");
 	}
 
 	@Override
-	protected ClientDetail getSummary(final ClientDetail bean) {
+	protected ClientDetailDTO getSummary(final ClientDetailDTO bean) {
 		return bean;
 	}
 

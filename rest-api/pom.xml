@@ -14,42 +14,12 @@
 
 	<packaging>jar</packaging>
 
+	<properties>
+		<!-- Dont run QA on generated code -->
+		<bt.qa.skip>true</bt.qa.skip>
+	</properties>
+
 	<dependencies>
-
-		<!-- Model -->
-		<dependency>
-			<groupId>com.github.bordertech.sample.app</groupId>
-			<artifactId>model-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Data envelope -->
-		<dependency>
-			<groupId>com.github.bordertech.restfriends</groupId>
-			<artifactId>restfriends-envelope</artifactId>
-		</dependency>
-
-		<!-- Jersey declarative linking support -->
-		<dependency>
-			<groupId>org.glassfish.jersey.ext</groupId>
-			<artifactId>jersey-declarative-linking</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- Bean validation -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- JAXB dependency (was provided by Java 8) -->
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.3.1</version>
-			<scope>provided</scope>
-		</dependency>
 
 		<!-- REST Interface -->
 		<dependency>
@@ -57,87 +27,90 @@
 			<artifactId>jsr311-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 		<!-- Swagger Annotations -->
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- Junit -->
+		<!-- Bean validation API -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Jackson annotations -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.12.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JAXB Dependency (was provided by Java 8) -->
+		<!--
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>2.3.1</version>
+				<scope>provided</scope>
+			</dependency>
+		-->
+
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- Generate JAXRS interface and Models from swagger.json-->
 			<plugin>
-				<!-- Generate Swagger JSON -->
-				<groupId>com.github.kongchen</groupId>
-				<artifactId>swagger-maven-plugin</artifactId>
-				<version>3.1.8</version>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>5.1.1</version>
 				<executions>
 					<execution>
-						<phase>compile</phase>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<!-- There is a BUG https://github.com/kongchen/swagger-maven-plugin/issues/422 -->
-					<!-- Swagger FIX -->
-					<dependency>
-						<groupId>com.github.bordertech.restfriends</groupId>
-						<artifactId>restfriends-swagger-json-fix</artifactId>
-						<version>1.0.4</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<apiSources>
-						<apisource>
-							<locations>
-								<location>com.sample.app.rest.api.v1</location>
-							</locations>
-							<schemes>
-								<scheme>http</scheme>
-								<scheme>https</scheme>
-							</schemes>
-							<info>
-								<title>SWAGGER API</title>
-								<version>${project.version}</version>
-							</info>
-							<host>localhost:8080</host>
-							<basePath>/api</basePath>
-							<swaggerDirectory>${project.build.directory}/generated-sources/swagger-json</swaggerDirectory>
-							<outputFormats>json</outputFormats>
-						</apisource>
-					</apiSources>
-				</configuration>
-			</plugin>
-			<!-- Include swagger.json in target JAR -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.build.directory}/generated-sources/swagger-json</directory>
-								</resource>
-							</resources>
+							<skipIfSpecIsUnchanged>false</skipIfSpecIsUnchanged>
+							<skip>false</skip>
+							<inputSpec>${basedir}/src/main/resources/swagger.yaml</inputSpec>
+							<output>${project.build.directory}/generated-sources</output>
+							<!-- https://openapi-generator.tech/docs/generators -->
+							<generatorName>jaxrs-spec</generatorName>
+							<modelPackage>com.sample.app.rest.v1.model</modelPackage>
+							<apiPackage>com.sample.app.rest.v1.api</apiPackage>
+							<invokerPackage>com.sample.app.rest.v1.invoker</invokerPackage>
+							<!-- https://openapi-generator.tech/docs/generators/jaxrs-spec -->
+							<configOptions>
+								<sourceFolder>openapi</sourceFolder>
+								<dateLibrary>java8-localdatetime</dateLibrary>
+								<java8>true</java8>
+								<useBeanValidation>true</useBeanValidation>
+								<useSwaggerAnnotations>true</useSwaggerAnnotations>
+								<interfaceOnly>true</interfaceOnly>
+								<returnResponse>false</returnResponse>
+								<hideGenerationTimestamp>true</hideGenerationTimestamp>
+								<serializableModel>true</serializableModel>
+								<booleanGetterPrefix>is</booleanGetterPrefix>
+							</configOptions>
+							<generateApis>true</generateApis>
+							<generateApiTests>false</generateApiTests>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<generateModelTests>false</generateModelTests>
+							<generateModels>true</generateModels>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<addCompileSourceRoot>true</addCompileSourceRoot>
+							<modelNameSuffix>DTO</modelNameSuffix>
 						</configuration>
 					</execution>
 				</executions>

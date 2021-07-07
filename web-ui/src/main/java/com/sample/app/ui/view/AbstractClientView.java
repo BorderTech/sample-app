@@ -1,5 +1,6 @@
 package com.sample.app.ui.view;
 
+import com.github.bordertech.taskmaster.service.exception.ServiceException;
 import com.github.bordertech.wcomponents.Action;
 import com.github.bordertech.wcomponents.ActionEvent;
 import com.github.bordertech.wcomponents.Container;
@@ -16,8 +17,7 @@ import com.github.bordertech.wcomponents.WSection;
 import com.github.bordertech.wcomponents.WebUtilities;
 import com.github.bordertech.wcomponents.layout.ColumnLayout;
 import com.github.bordertech.wcomponents.validation.ValidatingAction;
-import com.sample.app.model.client.ClientDetail;
-import com.sample.app.model.exception.ServiceException;
+import com.sample.app.rest.v1.model.ClientDetailDTO;
 import com.sample.app.ui.application.ClientApp;
 import com.sample.app.ui.common.ClientWMessages;
 import com.sample.app.ui.common.Constants;
@@ -230,7 +230,7 @@ public abstract class AbstractClientView<T> extends WSection implements MessageC
 				getApp().showSearch();
 			} else {
 				doUpdateServiceCall(bean);
-				ClientDetail summary = getSummary(bean);
+				ClientDetailDTO summary = getSummary(bean);
 				getApp().showSearchWithUpdate(summary);
 			}
 		} catch (Exception e) {
@@ -248,7 +248,7 @@ public abstract class AbstractClientView<T> extends WSection implements MessageC
 
 	protected abstract void doUpdateServiceCall(final T bean) throws ServiceException;
 
-	protected abstract ClientDetail getSummary(final T bean);
+	protected abstract ClientDetailDTO getSummary(final T bean);
 
 	@Override
 	public WMessages getMessages() {

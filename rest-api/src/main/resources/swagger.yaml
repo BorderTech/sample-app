@@ -1,0 +1,409 @@
+---
+swagger: "2.0"
+info:
+  title: "Sample API"
+  description: "Demonstrating a sample API"
+  version: 1.0.0
+host: "localhost:8082"
+basePath: "/lde/api"
+schemes:
+  - http
+  - https
+tags:
+- name: "ClientServices"
+paths:
+  /v1/clients/{id}/documents:
+    get:
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Retrieve client documents"
+      description: ""
+      operationId: "retrieveClientDocuments"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Client id"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RetrieveClientDocumentsResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /v1/clients/{id}:
+    get:
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Retrieve client"
+      description: ""
+      operationId: "retrieveClient"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Client id"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ClientDetailResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Update client"
+      description: ""
+      operationId: "updateClient"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Client id"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Client details"
+        required: false
+        schema:
+          $ref: "#/definitions/ClientDetail"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ClientDetailResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+      - "ClientServices"
+      summary: "Delete client"
+      description: ""
+      operationId: "deleteClient"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Client id"
+        required: true
+        type: "string"
+      responses:
+        "204":
+          description: "Successful operation"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /v1/clients:
+    get:
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Search clients"
+      description: ""
+      operationId: "searchClients"
+      parameters:
+      - name: "search"
+        in: "query"
+        description: "Search criteria"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/SearchClientsResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Create client"
+      description: ""
+      operationId: "createClient"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Client details"
+        required: false
+        schema:
+          $ref: "#/definitions/ClientDetail"
+      responses:
+        "201":
+          description: "Created OK"
+          schema:
+            $ref: "#/definitions/ClientDetailResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /v1/tables/{table}:
+    get:
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Retrieve codes for a table"
+      description: ""
+      operationId: "retrieveCodes"
+      parameters:
+      - name: "table"
+        in: "path"
+        description: "Table name"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RetrieveCodesResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /v1/tables:
+    get:
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Retrieve table names"
+      description: ""
+      operationId: "retrieveTables"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/RetrieveTablesResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /v1/documents/{docId}:
+    get:
+      produces:
+        - application/json
+      tags:
+      - "ClientServices"
+      summary: "Retrieve client documents"
+      description: ""
+      operationId: "retrieveDocument"
+      parameters:
+      - name: "docId"
+        in: "path"
+        description: "Document id"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/DocumentContentResponse"
+        "400":
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Internal error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+definitions:
+  DocumentDetail:
+    type: "object"
+    properties:
+      documentId:
+        type: "string"
+      description:
+        type: "string"
+      submitDate:
+        type: "string"
+        format: "date"
+      resourcePath:
+        type: "string"
+  RetrieveClientDocumentsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/DocumentDetail"
+  ErrorDetail:
+    type: "object"
+    properties:
+      status:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      moreInfoUrl:
+        type: "string"
+  ErrorResponse:
+    type: "object"
+    properties:
+      error:
+        $ref: "#/definitions/ErrorDetail"
+  AddressDetail:
+    type: "object"
+    properties:
+      street:
+        type: "string"
+      suburb:
+        type: "string"
+      state:
+        type: "string"
+        enum:
+        - "ACT"
+        - "NSW"
+        - "NT"
+        - "QLD"
+        - "TAS"
+        - "VIC"
+        - "WA"
+      postcode:
+        type: "string"
+      countryCode:
+        type: "string"
+  ClientDetail:
+    type: "object"
+    properties:
+      clientId:
+        type: "string"
+        minLength: 1
+      name:
+        type: "string"
+        minLength: 1
+      abn:
+        type: "string"
+        minLength: 1
+      email:
+        type: "string"
+        format: "email"
+        minLength: 1
+        description: "email address"
+      address:
+        $ref: "#/definitions/AddressDetail"
+      sampleInt:
+        type: "integer"
+      sampleDate:
+        type: "string"
+        format: "date-time"
+      sampleOnlyDate:
+        type: "string"
+        format: "date"
+      sampleLocalDate:
+        type: "string"
+        format: "date"
+      sampleLocalDateTime:
+        type: "string"
+        format: "date-time"
+    required:
+      - name
+      - abn
+  ClientDetailResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/ClientDetail"
+  CodeOption:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      description:
+        type: "string"
+  RetrieveCodesResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/CodeOption"
+  RetrieveTablesResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        items:
+          type: "string"
+  SearchClientsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/ClientDetail"
+  DocumentContent:
+    type: "object"
+    required:
+    - "bytes"
+    properties:
+      documentId:
+        type: "string"
+      bytes:
+        type: "string"
+        format: "byte"
+      filename:
+        type: "string"
+      mimeType:
+        type: "string"
+  DocumentContentResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/DocumentContent"

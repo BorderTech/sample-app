@@ -22,14 +22,16 @@ import com.github.bordertech.wcomponents.WTableColumn;
 import com.github.bordertech.wcomponents.WText;
 import com.github.bordertech.wcomponents.WTextField;
 import com.github.bordertech.wcomponents.validation.ValidatingAction;
-import com.sample.app.model.client.ClientDetail;
-import com.sample.app.model.services.ClientServices;
+import com.sample.app.rest.v1.api.V1Api;
+import com.sample.app.rest.v1.model.AddressDetailDTO;
+import com.sample.app.rest.v1.model.ClientDetailDTO;
 import com.sample.app.ui.application.ClientApp;
 import com.sample.app.ui.common.ClientWMessages;
 import com.sample.app.ui.common.Constants;
 import com.sample.app.ui.common.WTextCountryCodeDesc;
-import com.sample.app.ui.util.ClientServicesHelperFactory;
+import com.sample.app.ui.util.V1ApiClientHelperFactory;
 import java.util.List;
+import java.util.Objects;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -40,7 +42,7 @@ public class SearchView extends WSection implements MessageContainer {
 
 	private static final Log LOG = LogFactory.getLog(SearchView.class);
 
-	private static final ClientServices CLIENT_SERVICES = ClientServicesHelperFactory.getInstance();
+	private static final V1Api CLIENT_SERVICES = V1ApiClientHelperFactory.getInstance();
 
 	private final ClientApp app;
 
@@ -155,7 +157,7 @@ public class SearchView extends WSection implements MessageContainer {
 		viewClient.setAction(new Action() {
 			@Override
 			public void execute(final ActionEvent event) {
-				ClientDetail client = (ClientDetail) viewClient.getBeanValue();
+				ClientDetailDTO client = (ClientDetailDTO) viewClient.getBeanValue();
 				doHandleClient(client.getClientId(), false);
 			}
 		});
@@ -168,7 +170,7 @@ public class SearchView extends WSection implements MessageContainer {
 		updateClient.setAction(new Action() {
 			@Override
 			public void execute(final ActionEvent event) {
-				ClientDetail client = (ClientDetail) viewClient.getBeanValue();
+				ClientDetailDTO client = (ClientDetailDTO) viewClient.getBeanValue();
 				doHandleClient(client.getClientId(), true);
 			}
 		});
@@ -181,15 +183,35 @@ public class SearchView extends WSection implements MessageContainer {
 		WList listCountry = new WList(WList.Type.STACKED);
 		listCountry.setRepeatedComponent(new WTextCountryCodeDesc());
 
+		// Foramt Addresss summary
+		WText txtAddress = new WText() {
+			@Override
+			public String getText() {
+				AddressDetailDTO det = (AddressDetailDTO) getBean();
+				StringBuilder buf = new StringBuilder();
+				buf.append(det.getStreet());
+				buf.append(", ").append(det.getSuburb());
+				buf.append(", ").append(det.getState());
+				buf.append(", ").append(det.getPostcode());
+				buf.append(", ").append(det.getCountryCode());
+				return buf.toString();
+			}
+		};
+
 		table.setMargin(Constants.SOUTH_MARGIN_LARGE);
 		table.addColumn(new WTableColumn("ID", new WText()));
 		table.addColumn(new WTableColumn("Name", new WText()));
-		table.addColumn(new WTableColumn("Address", new WText()));
+		table.addColumn(new WTableColumn("Address", txtAddress));
 		table.addColumn(new WTableColumn("Actions", actionsContainer));
 		table.setStripingType(WTable.StripingType.ROWS);
 		table.setNoDataMessage("No clients found.");
 
-		SimpleBeanBoundTableModel model = new SimpleBeanBoundTableModel(new String[]{"clientId", "name", "address", "."});
+		SimpleBeanBoundTableModel model = new SimpleBeanBoundTableModel(new String[]{"clientId", "name", "address", "."}) {
+			@Override
+			public Object getRowKey(final List<Integer> row) {
+				return ((ClientDetailDTO) super.getRowKey(row)).getClientId();
+			}
+		};
 		table.setTableModel(model);
 
 		table.setBeanProperty(".");
@@ -202,11 +224,14 @@ public class SearchView extends WSection implements MessageContainer {
 	 *
 	 * @param summary the client details.
 	 */
-	public void refreshClientSummary(final ClientDetail summary) {
-		List<ClientDetail> clients = (List<ClientDetail>) table.getBean();
-		int idx = clients.indexOf(summary);
-		if (idx >= 0) {
-			clients.set(idx, summary);
+	public void refreshClientSummary(final ClientDetailDTO summary) {
+		List<ClientDetailDTO> clients = (List<ClientDetailDTO>) table.getBean();
+		// Find ID
+		for (int idx = 0; idx < clients.size(); idx++) {
+			if (Objects.equals(clients.get(idx).getClientId(), summary.getClientId())) {
+				clients.set(idx, summary);
+				break;
+			}
 		}
 	}
 
@@ -220,7 +245,7 @@ public class SearchView extends WSection implements MessageContainer {
 	private void doSearch(final String criteria) {
 		try {
 			table.reset();
-			List<ClientDetail> clients = CLIENT_SERVICES.searchClients(criteria);
+			List<ClientDetailDTO> clients = CLIENT_SERVICES.searchClients(criteria).getData();
 			if (clients.isEmpty()) {
 				messages.info("No clients found");
 				return;
@@ -237,7 +262,7 @@ public class SearchView extends WSection implements MessageContainer {
 
 	private void doHandleClient(final String clientId, final boolean update) {
 		try {
-			ClientDetail detail = CLIENT_SERVICES.retrieveClient(clientId);
+			ClientDetailDTO detail = CLIENT_SERVICES.retrieveClient(clientId).getData();
 			app.viewClient(detail, update);
 		} catch (Exception e) {
 			String msg = "Error retrieving client [" + clientId + "]. " + e.getMessage();

@@ -23,16 +23,16 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- REST Client Services -->
+		<!-- REST Client Implementation -->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
-			<artifactId>rest-client-model-impl</artifactId>
+			<artifactId>rest-client-impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- MOCK Implementation (Usually only used in LDE or Unit Tests)-->
+		<!-- Rest Mock Implementation (Usually only used in LDE or Unit Tests)-->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
-			<artifactId>model-mock-impl</artifactId>
+			<artifactId>rest-mock-impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

@@ -30,10 +30,10 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Model -->
+		<!-- REST API -->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
-			<artifactId>model-api</artifactId>
+			<artifactId>rest-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -75,7 +75,7 @@
 		<!-- MOCK Services -->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
-			<artifactId>model-mock-impl</artifactId>
+			<artifactId>rest-mock-impl</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>

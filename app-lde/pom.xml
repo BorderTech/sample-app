@@ -28,7 +28,7 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- MOCK Services -->
+		<!-- MOCK Backing Implementation -->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
 			<artifactId>model-mock-impl</artifactId>

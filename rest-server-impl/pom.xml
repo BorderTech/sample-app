@@ -16,14 +16,31 @@
 	<properties>
 		<!-- Needed for tomcat jar lookups -->
 		<surefire.useSystemClassLoader>false</surefire.useSystemClassLoader>
+		<!-- Exclude generated files from QA -->
+		<checkstyle.excludes>com/sample/app/rest/server/v1/api/**/*</checkstyle.excludes>
+		<spotbugs.excludeFilterFile>${basedir}/spotbugs-exclude-files.xml</spotbugs.excludeFilterFile>
 	</properties>
 
 	<dependencies>
 
-		<!-- API -->
+		<!-- REST API -->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
 			<artifactId>rest-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Backing Model API -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>model-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Model Mapping -->
+		<dependency>
+			<groupId>com.github.bordertech.sample.app</groupId>
+			<artifactId>rest-model-mapping</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -31,6 +48,32 @@
 		<dependency>
 			<groupId>com.github.bordertech.restfriends</groupId>
 			<artifactId>restfriends-swagger-jersey2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jersey2-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
 		</dependency>
 
 		<!-- Jersey Bean Validation -->
@@ -62,6 +105,12 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.4.4</version>
 		</dependency>
 
 		<!-- JUNIT -->
@@ -101,5 +150,69 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Regenerate swagger JAXRS interface with return Response optin to allow more configuration -->
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>5.1.1</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<skipIfSpecIsUnchanged>false</skipIfSpecIsUnchanged>
+							<skip>false</skip>
+							<inputSpec>${basedir}/../rest-api/src/main/resources/swagger.yaml</inputSpec>
+							<output>${project.build.directory}/generated-sources</output>
+							<!-- https://openapi-generator.tech/docs/generators -->
+							<generatorName>jaxrs-spec</generatorName>
+							<modelPackage>com.sample.app.rest.v1.model</modelPackage>
+							<apiPackage>com.sample.app.rest.server.v1.api</apiPackage>
+							<invokerPackage>com.sample.app.rest.server.v1.invoker</invokerPackage>
+							<!-- https://openapi-generator.tech/docs/generators/jaxrs-spec -->
+							<configOptions>
+								<sourceFolder>openapi</sourceFolder>
+								<dateLibrary>java8-localdatetime</dateLibrary>
+								<java8>true</java8>
+								<useBeanValidation>true</useBeanValidation>
+								<useSwaggerAnnotations>true</useSwaggerAnnotations>
+								<interfaceOnly>true</interfaceOnly>
+								<!-- Return response so different status codes can be returned -->
+								<returnResponse>true</returnResponse>
+								<hideGenerationTimestamp>true</hideGenerationTimestamp>
+								<serializableModel>true</serializableModel>
+								<booleanGetterPrefix>is</booleanGetterPrefix>
+							</configOptions>
+							<generateApis>true</generateApis>
+							<generateApiTests>false</generateApiTests>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<generateModelTests>false</generateModelTests>
+							<generateModels>false</generateModels>
+							<generateModelDocumentation>false</generateModelDocumentation>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<addCompileSourceRoot>true</addCompileSourceRoot>
+							<modelNameSuffix>DTO</modelNameSuffix>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- PMD - Exclude Generated -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<excludeRoots>
+						<excludeRoot>target/generated-sources</excludeRoot>
+					</excludeRoots>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

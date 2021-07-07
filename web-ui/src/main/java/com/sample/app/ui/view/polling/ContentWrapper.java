@@ -2,7 +2,7 @@ package com.sample.app.ui.view.polling;
 
 import com.github.bordertech.taskmaster.service.ResultHolder;
 import com.github.bordertech.wcomponents.ContentAccess;
-import com.sample.app.model.client.DocumentContent;
+import com.sample.app.rest.v1.model.DocumentContentDTO;
 
 /**
  * Wrap the document content.
@@ -40,6 +40,6 @@ public abstract class ContentWrapper implements ContentAccess {
 	 *
 	 * @return the service result (preferably from a cache)
 	 */
-	protected abstract ResultHolder<String, DocumentContent> getDocument();
+	protected abstract ResultHolder<String, DocumentContentDTO> getDocument();
 
 }

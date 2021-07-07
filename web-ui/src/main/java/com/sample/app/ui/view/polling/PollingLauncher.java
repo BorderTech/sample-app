@@ -7,15 +7,15 @@ import com.github.bordertech.wcomponents.WLink;
 import com.github.bordertech.wcomponents.WPopup;
 import com.github.bordertech.wcomponents.addons.polling.PollingServicePanel;
 import com.github.bordertech.wcomponents.addons.polling.PollingStartType;
-import com.sample.app.model.client.DocumentContent;
-import com.sample.app.model.client.DocumentDetail;
+import com.sample.app.rest.v1.model.DocumentContentDTO;
+import com.sample.app.rest.v1.model.DocumentDetailDTO;
 import com.sample.app.ui.view.DocumentView;
 import javax.cache.Cache;
 
 /**
  * Polling panel that provides a link to the document content (once retrieved).
  */
-public class PollingLauncher extends PollingServicePanel<DocumentDetail, DocumentContent> {
+public class PollingLauncher extends PollingServicePanel<DocumentDetailDTO, DocumentContentDTO> {
 
 	private final WContent content = new WContent();
 	private final WPopup popup = new WPopup() {
@@ -42,7 +42,7 @@ public class PollingLauncher extends PollingServicePanel<DocumentDetail, Documen
 	/**
 	 * @param document the polling launcher document details
 	 */
-	public PollingLauncher(final DocumentDetail document) {
+	public PollingLauncher(final DocumentDetailDTO document) {
 		setServiceCriteria(document);
 		getContentResultHolder().add(content);
 		getContentResultHolder().add(popup);
@@ -66,7 +66,7 @@ public class PollingLauncher extends PollingServicePanel<DocumentDetail, Documen
 	@Override
 	protected void handleInitPollingPanel(final Request request) {
 		super.handleInitPollingPanel(request);
-		DocumentDetail doc = getServiceCriteria();
+		DocumentDetailDTO doc = getServiceCriteria();
 		getStartButton().setText(doc.getResourcePath());
 	}
 
@@ -74,7 +74,7 @@ public class PollingLauncher extends PollingServicePanel<DocumentDetail, Documen
 	protected void handleInitResultContent(final Request request) {
 		super.handleInitResultContent(request);
 		// Setup the document details on the Link
-		DocumentContent doc = getServiceResult().getResult();
+		DocumentContentDTO doc = getServiceResult().getResult();
 		String key = doc.getDocumentId() + "-" + doc.getFilename();
 		content.setContentAccess(new CachedContentWrapper(doc.getFilename(), doc.getMimeType(), doc.getDocumentId()));
 		content.setCacheKey(key);

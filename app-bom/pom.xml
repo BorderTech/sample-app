@@ -33,7 +33,7 @@
 			<artifactId>didums-core</artifactId>
 		</dependency>
 
-		<!-- MOCK Implementation -->
+		<!-- MOCK Backing Model Implementation -->
 		<dependency>
 			<groupId>com.github.bordertech.sample.app</groupId>
 			<artifactId>model-mock-impl</artifactId>

@@ -22,7 +22,9 @@ public class ClientDetail implements Serializable {
 	private String email;
 	private AddressDetail address;
 
+	private Integer sampleInt;
 	private Date sampleDate;
+	private Date sampleOnlyDate;
 	private LocalDate sampleLocalDate;
 	private LocalDateTime sampleLocalDateTime;
 
@@ -97,6 +99,20 @@ public class ClientDetail implements Serializable {
 	}
 
 	/**
+	 * @return the sample integer
+	 */
+	public Integer getSampleInt() {
+		return sampleInt;
+	}
+
+	/**
+	 * @param sampleInt the sample integer
+	 */
+	public void setSampleInt(final Integer sampleInt) {
+		this.sampleInt = sampleInt;
+	}
+
+	/**
 	 * @return the sample date
 	 */
 	public Date getSampleDate() {
@@ -108,6 +124,20 @@ public class ClientDetail implements Serializable {
 	 */
 	public void setSampleDate(final Date sampleDate) {
 		this.sampleDate = sampleDate;
+	}
+
+	/**
+	 * @return the sample only date
+	 */
+	public Date getSampleOnlyDate() {
+		return sampleOnlyDate;
+	}
+
+	/**
+	 * @param sampleOnlyDate the sample only date
+	 */
+	public void setSampleOnlyDate(final Date sampleOnlyDate) {
+		this.sampleOnlyDate = sampleOnlyDate;
 	}
 
 	/**

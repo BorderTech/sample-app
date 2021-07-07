@@ -14,8 +14,8 @@ import com.github.bordertech.wcomponents.WSection;
 import com.github.bordertech.wcomponents.WText;
 import com.github.bordertech.wcomponents.WTimeoutWarning;
 import com.github.bordertech.wcomponents.WebUtilities;
-import com.sample.app.model.client.AddressDetail;
-import com.sample.app.model.client.ClientDetail;
+import com.sample.app.rest.v1.model.AddressDetailDTO;
+import com.sample.app.rest.v1.model.ClientDetailDTO;
 import com.sample.app.ui.common.ClientWMessages;
 import com.sample.app.ui.common.Constants;
 import com.sample.app.ui.common.ViewMode;
@@ -113,7 +113,7 @@ public class ClientApp extends WApplication implements MessageContainer {
 	 *
 	 * @param summary the updated client details
 	 */
-	public void showSearchWithUpdate(final ClientDetail summary) {
+	public void showSearchWithUpdate(final ClientDetailDTO summary) {
 		vwSearch.refreshClientSummary(summary);
 		showSearch();
 	}
@@ -124,7 +124,7 @@ public class ClientApp extends WApplication implements MessageContainer {
 	 * @param detail the client details
 	 * @param update true if allow update
 	 */
-	public void viewClient(final ClientDetail detail, final boolean update) {
+	public void viewClient(final ClientDetailDTO detail, final boolean update) {
 		vwClient.reset();
 		vwClient.setViewMode(update ? ViewMode.UPDATE : ViewMode.READONLY);
 		vwClient.setDetail(detail);
@@ -135,8 +135,8 @@ public class ClientApp extends WApplication implements MessageContainer {
 	 * Show create client view.
 	 */
 	public void createClient() {
-		ClientDetail detail = new ClientDetail();
-		detail.setAddress(new AddressDetail());
+		ClientDetailDTO detail = new ClientDetailDTO();
+		detail.setAddress(new AddressDetailDTO());
 		vwClient.reset();
 		vwClient.setViewMode(ViewMode.CREATE);
 		vwClient.setDetail(detail);

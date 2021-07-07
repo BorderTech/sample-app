@@ -1,7 +1,7 @@
 package com.sample.app.ui.view.polling;
 
 import com.github.bordertech.taskmaster.service.ResultHolder;
-import com.sample.app.model.client.DocumentContent;
+import com.sample.app.rest.v1.model.DocumentContentDTO;
 import com.sample.app.ui.view.DocumentView;
 
 /**
@@ -25,7 +25,7 @@ public class CachedContentWrapper extends ContentWrapper {
 	 * @return the service result from the CACHE
 	 */
 	@Override
-	protected ResultHolder<String, DocumentContent> getDocument() {
+	protected ResultHolder<String, DocumentContentDTO> getDocument() {
 		return DocumentView.CACHE.get(documentId);
 	}
 

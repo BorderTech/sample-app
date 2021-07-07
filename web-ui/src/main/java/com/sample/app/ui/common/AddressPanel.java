@@ -1,12 +1,12 @@
 package com.sample.app.ui.common;
 
+import com.github.bordertech.wcomponents.Option;
 import com.github.bordertech.wcomponents.WDropdown;
 import com.github.bordertech.wcomponents.WFieldLayout;
 import com.github.bordertech.wcomponents.WMessages;
 import com.github.bordertech.wcomponents.WPanel;
 import com.github.bordertech.wcomponents.WTextField;
-import com.sample.app.model.client.CodeOption;
-import com.sample.app.model.client.StateType;
+import com.sample.app.rest.v1.model.AddressDetailDTO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AddressPanel extends WPanel {
 		drpState.setBeanProperty("state");
 		layout.addField("State", drpState);
 
-		List<StateType> options = new ArrayList<>(Arrays.asList(StateType.values()));
+		List<AddressDetailDTO.StateEnum> options = new ArrayList<>(Arrays.asList(AddressDetailDTO.StateEnum.values()));
 		options.add(0, null);
 		drpState.setOptions(options);
 
@@ -58,8 +58,8 @@ public class AddressPanel extends WPanel {
 
 			@Override
 			protected void doUpdateBeanValue(final Object value) {
-				if (value instanceof CodeOption) {
-					super.doUpdateBeanValue(((CodeOption) value).getCode());
+				if (value instanceof Option) {
+					super.doUpdateBeanValue(((Option) value).getCode());
 				} else {
 					super.doUpdateBeanValue(value);
 				}
