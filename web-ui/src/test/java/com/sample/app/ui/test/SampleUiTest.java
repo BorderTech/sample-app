@@ -1,10 +1,11 @@
 package com.sample.app.ui.test;
 
+import com.github.bordertech.webfriends.junit.runner.AbstractFriendTestCase;
 import com.github.bordertech.webfriends.selenium.common.tag.SeleniumTags;
 import com.github.bordertech.webfriends.selenium.element.form.SButton;
 import com.github.bordertech.webfriends.selenium.element.sections.SHeading1;
 import com.github.bordertech.webfriends.selenium.element.table.STable;
-import com.github.bordertech.webfriends.selenium.smart.junit.SmartDriverTestCase;
+import com.github.bordertech.webfriends.selenium.smart.driver.SmartDriver;
 import com.sample.app.test.Smoke;
 import com.sample.app.test.Unit;
 import org.junit.Assert;
@@ -15,7 +16,7 @@ import org.junit.experimental.categories.Category;
  * Sample UI Unit tests.
  */
 @Category({Unit.class, Smoke.class})
-public class SampleUiTest extends SmartDriverTestCase {
+public class SampleUiTest extends AbstractFriendTestCase<SmartDriver> {
 // ## SMOKE Properties
 // ##bordertech.webfriends.selenium.launchServer=false
 // ##bordertech.webfriends.selenium.serverUrl=http://localhost:8081/lde
