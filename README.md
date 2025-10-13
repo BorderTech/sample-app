@@ -5,7 +5,7 @@ Sample application demonstrates how a project can be structured with RESTful ser
 This project can be cloned as a template.
 
 ## Status
-[![Build Status](https://travis-ci.com/BorderTech/sample-app.svg?branch=master)](https://travis-ci.com/BorderTech/sample-app)
+[![Java CI](https://github.com/BorderTech/sample-app/actions/workflows/github-actions-build.yml/badge.svg)](https://github.com/BorderTech/sample-app/actions/workflows/github-actions-build.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bordertech-sample-app&metric=alert_status)](https://sonarcloud.io/dashboard?id=bordertech-sample-app)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bordertech-sample-app&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=bordertech-sample-app)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bordertech-sample-app&metric=coverage)](https://sonarcloud.io/dashboard?id=bordertech-sample-app)
@@ -19,18 +19,7 @@ Follow these commands to fetch the source and build:
 
 1. git clone https://github.com/BorderTech/sample-app.git my-dir (first time only)
 2. cd my-dir
-
-#### Quick build
-
-Quick build profile has QA and Tests turned off
-
-3. ```mvn install -Pquick-build```
-
-#### Full build
-
-On windows make sure chromedriver is in PATH, on *NIX in current user profile. Otherwise provide system property `-Dwebdriver.chrome.driver`. See [ChromeDriver](https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver) for more information.
-
-4. ```mvn install -Dwebdriver.chrome.driver=/path/to/chromedriver.exe```
+3. mvn clean install -Pquick-build (The profile quick-build has QA and Tests turned off)
 
 <a name="restservice"></a>
 ### Run REST Service
