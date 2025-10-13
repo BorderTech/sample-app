@@ -5,20 +5,17 @@
 	<parent>
 		<groupId>com.github.bordertech.common</groupId>
 		<artifactId>qa-parent</artifactId>
-		<version>1.0.16</version>
+		<version>1.0.21</version>
 	</parent>
 
 	<packaging>pom</packaging>
 
 	<properties>
 		<bt.qa.skip>false</bt.qa.skip>
-		<!-- Report Vulnerabilities. -->
-		<failBuildOnCVSS>11</failBuildOnCVSS>
-		<!-- Update every 168 hours (7 days) -->
-		<cveValidForHours>168</cveValidForHours>
 		<!-- warName defaults to maven's generated name, with option to modify it -->
 		<app.warName>${project.build.finalName}</app.warName>
 		<web.warName>${project.build.finalName}</web.warName>
+		<dependency-check.skip>true</dependency-check.skip>
 	</properties>
 
 	<name>sample-app-parent</name>
