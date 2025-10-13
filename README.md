@@ -19,18 +19,7 @@ Follow these commands to fetch the source and build:
 
 1. git clone https://github.com/BorderTech/sample-app.git my-dir (first time only)
 2. cd my-dir
-
-#### Quick build
-
-Quick build profile has QA and Tests turned off
-
-3. ```mvn install -Pquick-build```
-
-#### Full build
-
-On windows make sure chromedriver is in PATH, on *NIX in current user profile. Otherwise provide system property `-Dwebdriver.chrome.driver`. See [ChromeDriver](https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver) for more information.
-
-4. ```mvn install -Dwebdriver.chrome.driver=/path/to/chromedriver.exe```
+3. mvn clean install -Pquick-build (The profile quick-build has QA and Tests turned off)
 
 <a name="restservice"></a>
 ### Run REST Service
