@@ -24,9 +24,6 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
-    - name: Set up test browser
-      uses: browser-actions/setup-firefox@latest
-
     - name: Build Test and Verify
       run: mvn -B -U clean install
 
