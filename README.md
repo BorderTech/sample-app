@@ -5,7 +5,7 @@ Sample application demonstrates how a project can be structured with RESTful ser
 This project can be cloned as a template.
 
 ## Status
-[![Build Status](https://travis-ci.com/BorderTech/sample-app.svg?branch=master)](https://travis-ci.com/BorderTech/sample-app)
+[![Java CI](https://github.com/BorderTech/sample-app/actions/workflows/github-actions-build.yml/badge.svg)](https://github.com/BorderTech/sample-app/actions/workflows/github-actions-build.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bordertech-sample-app&metric=alert_status)](https://sonarcloud.io/dashboard?id=bordertech-sample-app)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bordertech-sample-app&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=bordertech-sample-app)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bordertech-sample-app&metric=coverage)](https://sonarcloud.io/dashboard?id=bordertech-sample-app)
